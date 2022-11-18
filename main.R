@@ -13,6 +13,6 @@ x<-pivot_filter_indicator(dfexmp,
                                          "religious_denomination","subject",
                                          "qualification_type","subject_entry"))
 
-write.csv(x,'data/ks4_subject_main_tidyup_202122.csv',row.names=FALSE)
+write.csv(x,'data/ks4_subject_main_tidy_202122.csv',row.names=FALSE)
 
 
