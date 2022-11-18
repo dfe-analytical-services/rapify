@@ -1,12 +1,19 @@
 
 scenario_characteristics <- function(
-    original='data/workforce_teacher_characteristics_NatRegLA_201021.csv'){
+    original='data/workforce_teacher_characteristics_NatReg_202022.csv'){
   dfchars <- read.csv(original, stringsAsFactors = FALSE)
   dfnational <- dfchars %>% 
-    filter(geographic_level=='National')
+    filter(geographic_level %in% c('National','Regional'),
+           time_period %in% c(202122,202021))
+
+  df_filters <- dfnational %>% select(-characteristic,-characteristic_group)
+  write.csv(df_filters,'data/data-structure-testing/workforce_teacher_characteristics_NatReg_202022_filters.csv',row.names=FALSE)
+  df_characs <- dfnational %>% select(-grade,-gender,-age_group,-working_pattern,
+                                      -qts_status,-on_route,-ethnicity_major,
+                                      -ethnicity_minor,-ethnic_minority)
+  write.csv(df_characs,'data/data-structure-testing/workforce_teacher_characteristics_NatReg_202022_characteristics.csv',row.names=FALSE)
   return(dfnational)
 }
-
 
 
 write.csv(dfexmp,'data/ks4_subject_main_wide_202122.csv',row.names=FALSE)
