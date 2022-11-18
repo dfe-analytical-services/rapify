@@ -1,0 +1,16 @@
+"time_period","time_identifier","geographic_level","country_code","country_name","school_characteristic","subject","qualification_type","subject_entry","total_level1pass","total_level2pass","percentage_level1pass","percentage_level2pass"
+202122,"Academic year","National","E92000001","England","Alternative Provision","Animal Care","Vocational",6,3,2,50,33
+202122,"Academic year","National","E92000001","England","Alternative Provision","Any subject","Vocational",512,348,152,68,30
+202122,"Academic year","National","E92000001","England","Alternative Provision","Art & Design","Vocational",17,10,5,59,29
+202122,"Academic year","National","E92000001","England","Alternative Provision","Business","Vocational",50,32,10,64,20
+202122,"Academic year","National","E92000001","England","Alternative Provision","Childcare","Vocational",57,40,16,70,28
+202122,"Academic year","National","E92000001","England","Alternative Provision","Construction","Vocational",9,5,2,56,22
+202122,"Academic year","National","E92000001","England","Alternative Provision","Engineering","Vocational",10,1,0,10,0
+202122,"Academic year","National","E92000001","England","Alternative Provision","Health","Vocational",47,38,22,81,47
+202122,"Academic year","National","E92000001","England","Alternative Provision","Hospitality and Catering","Vocational",68,24,9,35,13
+202122,"Academic year","National","E92000001","England","Alternative Provision","Information and Communication Technology","Vocational",12,6,2,50,17
+202122,"Academic year","National","E92000001","England","Alternative Provision","Multimedia","Vocational",51,37,13,73,25
+202122,"Academic year","National","E92000001","England","Alternative Provision","Music","Vocational",32,19,15,59,47
+202122,"Academic year","National","E92000001","England","Alternative Provision","Speech & Drama","Vocational",15,13,4,87,27
+202122,"Academic year","National","E92000001","England","Alternative Provision","Sports","Vocational",225,158,63,70,28
+202122,"Academic year","National","E92000001","England","Alternative Provision","Tourism","Vocational",34,24,11,71,32

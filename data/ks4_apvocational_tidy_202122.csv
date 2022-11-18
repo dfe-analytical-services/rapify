@@ -1,0 +1,31 @@
+"time_period","time_identifier","geographic_level","country_code","country_name","school_characteristic","subject","qualification_type","subject_entry","grade","total","percentage"
+202122,"Academic year","National","E92000001","England","Alternative Provision","Animal Care","Vocational",6,"level1pass",3,50
+202122,"Academic year","National","E92000001","England","Alternative Provision","Animal Care","Vocational",6,"level2pass",2,33
+202122,"Academic year","National","E92000001","England","Alternative Provision","Any subject","Vocational",512,"level1pass",348,68
+202122,"Academic year","National","E92000001","England","Alternative Provision","Any subject","Vocational",512,"level2pass",152,30
+202122,"Academic year","National","E92000001","England","Alternative Provision","Art & Design","Vocational",17,"level1pass",10,59
+202122,"Academic year","National","E92000001","England","Alternative Provision","Art & Design","Vocational",17,"level2pass",5,29
+202122,"Academic year","National","E92000001","England","Alternative Provision","Business","Vocational",50,"level1pass",32,64
+202122,"Academic year","National","E92000001","England","Alternative Provision","Business","Vocational",50,"level2pass",10,20
+202122,"Academic year","National","E92000001","England","Alternative Provision","Childcare","Vocational",57,"level1pass",40,70
+202122,"Academic year","National","E92000001","England","Alternative Provision","Childcare","Vocational",57,"level2pass",16,28
+202122,"Academic year","National","E92000001","England","Alternative Provision","Construction","Vocational",9,"level1pass",5,56
+202122,"Academic year","National","E92000001","England","Alternative Provision","Construction","Vocational",9,"level2pass",2,22
+202122,"Academic year","National","E92000001","England","Alternative Provision","Engineering","Vocational",10,"level1pass",1,10
+202122,"Academic year","National","E92000001","England","Alternative Provision","Engineering","Vocational",10,"level2pass",0,0
+202122,"Academic year","National","E92000001","England","Alternative Provision","Health","Vocational",47,"level1pass",38,81
+202122,"Academic year","National","E92000001","England","Alternative Provision","Health","Vocational",47,"level2pass",22,47
+202122,"Academic year","National","E92000001","England","Alternative Provision","Hospitality and Catering","Vocational",68,"level1pass",24,35
+202122,"Academic year","National","E92000001","England","Alternative Provision","Hospitality and Catering","Vocational",68,"level2pass",9,13
+202122,"Academic year","National","E92000001","England","Alternative Provision","Information and Communication Technology","Vocational",12,"level1pass",6,50
+202122,"Academic year","National","E92000001","England","Alternative Provision","Information and Communication Technology","Vocational",12,"level2pass",2,17
+202122,"Academic year","National","E92000001","England","Alternative Provision","Multimedia","Vocational",51,"level1pass",37,73
+202122,"Academic year","National","E92000001","England","Alternative Provision","Multimedia","Vocational",51,"level2pass",13,25
+202122,"Academic year","National","E92000001","England","Alternative Provision","Music","Vocational",32,"level1pass",19,59
+202122,"Academic year","National","E92000001","England","Alternative Provision","Music","Vocational",32,"level2pass",15,47
+202122,"Academic year","National","E92000001","England","Alternative Provision","Speech & Drama","Vocational",15,"level1pass",13,87
+202122,"Academic year","National","E92000001","England","Alternative Provision","Speech & Drama","Vocational",15,"level2pass",4,27
+202122,"Academic year","National","E92000001","England","Alternative Provision","Sports","Vocational",225,"level1pass",158,70
+202122,"Academic year","National","E92000001","England","Alternative Provision","Sports","Vocational",225,"level2pass",63,28
+202122,"Academic year","National","E92000001","England","Alternative Provision","Tourism","Vocational",34,"level1pass",24,71
+202122,"Academic year","National","E92000001","England","Alternative Provision","Tourism","Vocational",34,"level2pass",11,32
