@@ -1,0 +1,9 @@
+col_name,col_type,label,indicator_grouping,indicator_unit,indicator_dp,filter_hint,filter_grouping_column
+quarter,Filter,Quarter,,,,,
+gender,Filter,Gender,,,,,
+age,Filter,Age,,,,,
+status,Filter,Employment status,,,,,
+number,Indicator,Number of people,,,0,,
+percent,Indicator,Percent of people,,,3,,
+annual_change,Indicator,Annual change,,%,3,,
+employment_rate,Indicator,Employment rate,,,3,,

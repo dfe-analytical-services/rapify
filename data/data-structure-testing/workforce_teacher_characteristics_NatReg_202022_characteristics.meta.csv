@@ -1,7 +1,0 @@
-col_name,col_type,label,indicator_grouping,indicator_unit,indicator_dp,filter_hint,filter_grouping_column
-school_type,Filter,Type of school,,,,,
-characteristic,Filter,Characteristic,,,,,characteristic_group
-full_time_equivalent,Indicator,Full-time equivalent,,,0,,
-headcount,Indicator,Headcount,,,0,,
-fte_percent_within_gender_grade,Indicator,Full-time equivalent percent within gender grade,,,1,,
-headcount_percent_within_gender_grade,Indicator,Headcount percent within gender grade,,,1,,
