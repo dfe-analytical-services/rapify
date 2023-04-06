@@ -1,69 +1,33 @@
-School workforce in England
-2021 Reporting Year
-
-Description
-
-This document describes the data included in the School Workforce in England National Statistics release’s underlying data files. This data is released under the terms of the  Open Government License and is intended to meet at least 3 stars for  Open Data.
-
-The  methodology document should be referenced alongside this data. It provides information on the data sources, their coverage and quality as well as explaining methodology used in producing the data.
-
-Coverage
-
-The Statistical Publication: ‘School Workforce in England’ provides the latest information at national and local level on the number and characteristics of teachers and other school staff that work in state funded schools in England.
-
-The publication summarises information collected from schools and local authorities via the November 2021 School Workforce Census and links data from other sources including teachers’ pension administration data and the Database of Qualified Teachers.
-
-It includes information on:
-
-- Teacher numbers, characteristics and deployment- a time series of teacher numbers in all state funded schools in England. It provides various breakdowns of these; by post held, school type and phase, gender, age, ethnicity, whether they work full/part-time, have Qualified Teacher Status or not etc.
-- Teacher turnover and retention- the number of qualified entrants to teaching (and whether they are new teachers or returners), their propensity to stay, and the numbers of qualified teachers leaving the teaching profession (e.g. through retirement or leaving early).
-- Teacher pay- the salaries received (in £5/10 thousand bands) for all teachers and separately for classroom teachers, leadership group teachers, and head teachers. The statistics also provide an age, gender and school type/phase breakdown. Where appropriate, average mean and median salaries are provided for comparison purposes. A summary time series of mean averages on a comparable basis is also provided.
-- Statistics on support staff- the number of teaching assistants and school support staff employed by all state funded schools. This data shows the numbers by post held and has some limited characteristics data e.g. gender and ethnicity.
-- Teacher qualifications and curriculum taught- information on the highest post-A-level qualification held by teachers (by teacher grade and school type/phase).
-
-Estimates are also provided,  based on a large sample of secondary schools, which show the number of teachers by subject, teaching at Key Stage 3-5 and the relevant number of hours taught.
-
-The publication also provides estimates of the number/percentage of teachers teaching each subject that have relevant post-A level qualifications in the subject. Similar data is produced showing the number of hours taught by teachers with relevant post-A level qualifications in the subject.
-
-- Teacher vacancies- the number of advertised teaching posts that were either vacant or temporarily filled at the census date in November (which is mid term). It provides subject level estimates for these posts for secondary schools only.
-- Teacher sickness absence- the number of teachers that have taken sickness absence in the previous academic year and the number of days they were absent.
-- Pupil teacher ratios- Pupil data from the January school census is used to produce pupil teacher ratios and pupil adult ratios (teachers and all classroom-based support) for each school type/phase.
-- Teacher retirements and teachers out of service- the overall number of teachers who have been awarded retirement benefits from the Teachers’ Pensions Scheme after leaving teaching service in England. Also included are estimates of the numbers of teachers with qualified teacher status in England who have left service or who never entered service.
-
-The underlying data files include national, regional, local authority and school level information for schools in England.
-
-File formats and conventions
-
-Where is it decided disclosure control is necessary to protect confidentiality, symbols are used in the underlying data files as follows:
-
-x= Not available - this information has not been collected or there are no estimates available at this level of aggregation.
-
-c = confidential - where presentation of data would disclose confidential information, for example being able to identify details about a single respondent.
-
-u= low reliability - this indicates values for which the user should be aware of potentially low quality.
-
-z= not applicable - for example no data at gender level for boys at an all-girls school).
-
-Data files
-
-Teacher characteristics
-
-Filename: workforce_teacher_characteristics_2010_2021_nat_reg_la_rework_v2.csv
-Geographic levels: National; Local Authority; Regional
-Time period: 2010/11 to 2021/22
-Content summary: Teacher Full Time Equivalent and headcount numbers by type of school and characteristics including age group, working pattern, grade and ethnicity (additional ancillary file at school level).
-
-Variable names and descriptions for this file are provided below:
-
-Variable name                          |  Variable description
--------------------------------------  |  ------------------------------------------------
-characteristic                         |  Characteristic
-fte_percent_within_gender_grade        |  Full-time equivalent percent within gender grade
-full_time_equivalent                   |  Full-time equivalent
-headcount                              |  Headcount
-headcount_percent_within_gender_grade  |  Headcount percent within gender grade
-school_type                            |  Type of school
-
-Footnotes:
-
-1. Gender unclassified numbers in 2021 are higher than previously seen. This is as a result of a known data quality issue in a small number of census returns. For more information, please see the methodology for this release.
+"","x"
+"1","time_period"
+"2","time_identifier"
+"3","geographic_level"
+"4","country_code"
+"5","country_name"
+"6","age"
+"7","breakdown_topic"
+"8","breakdown"
+"9","number_in_ss_cohort"
+"10","percentage-l2"
+"11","number-l2"
+"12","percentage-l3"
+"13","number-l3"
+"14","percentage-l2_eng_gcse_ac"
+"15","number-l2_eng_gcse_ac"
+"16","percentage-l2_eng_gcse_othl2"
+"17","number-l2_eng_gcse_othl2"
+"18","percentage-l2_maths_gcse_ac"
+"19","number-l2_maths_gcse_ac"
+"20","percentage-l2_maths_gcse_othl2"
+"21","number-l2_maths_gcse_othl2"
+"22","percentage-l2_em_gcse_ac"
+"23","number-l2_em_gcse_ac"
+"24","percentage-l2_em_gcse_othl2"
+"25","number-l2_em_gcse_othl2"
+"26","percentage-l2_with_em"
+"27","number-l2_with_em"
+"28","percentage-l2_eng_fsq"
+"29","number-l2_eng_fsq"
+"30","percentage-l2_maths_fsq"
+"31","number-l2_maths_fsq"
+"32","percentage-in_ss_cohort"
