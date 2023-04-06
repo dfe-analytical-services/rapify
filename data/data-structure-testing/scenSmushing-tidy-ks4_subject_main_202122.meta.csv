@@ -1,0 +1,8 @@
+﻿col_name,col_type,label,indicator_grouping,indicator_unit,indicator_dp,filter_hint,filter_grouping_column
+gender,Filter,Gender,,,,,
+subject,Filter,Subject,,,,,
+qualification_type,Filter,Qualification type,,,,,
+grade,Filter,Grade,,,,,
+subject_entry,Indicator,Total entered,,,0,,
+total,Indicator,Total achieving grade,,,0,,
+percentage,Indicator,Percentage achieving grade,,,0,,

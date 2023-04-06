@@ -1,0 +1,7 @@
+col_name,col_type,label,indicator_grouping,indicator_unit,indicator_dp,filter_hint,filter_grouping_column
+school_type,Filter,Type of school,,,,,
+pupil_status,Filter,Pupil status,,,,,
+pupil_age,Filter,Pupil age,,,,,
+projection_year,Filter,Projection year,,,,,
+actual,Indicator,Population (actual),,,0,,
+projection,Indicator,Population (projected),,,0,,
