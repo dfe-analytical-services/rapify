@@ -1,7 +1,6 @@
 col_name,col_type,label,indicator_grouping,indicator_unit,indicator_dp,filter_hint,filter_grouping_column
 age,Filter,Age,,,,,
-breakdown_topic,Filter,Breakdown topic,,,,,
-breakdown,Filter,Breakdown,,,,,
+breakdown,Filter,Breakdown,,,,,breakdown_topic
 achievement,Filter,Achievement,,,,,
 number,Indicator,Number of pupils,,,0,,
 percentage,Indicator,Percentage of pupils,,,1,,

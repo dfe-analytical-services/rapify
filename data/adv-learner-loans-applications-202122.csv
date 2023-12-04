@@ -1,0 +1,425 @@
+time_period,time_identifier,geographic_level,country_code,country_name,region_name,region_code,characteristic_group,characteristic,qualification_type,ssa_t1_desc,provider_type,apps_received,apps_approved,loan_amount_awarded_in_thousands
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Total,67280,56870,148800
+201415,Academic year,National,E92000001,England,,,Gender,Male,Total,Total,Total,18610,15310,44900
+201415,Academic year,National,E92000001,England,,,Gender,Female,Total,Total,Total,48670,41550,104000
+201415,Academic year,National,E92000001,England,,,Age group,19-23,Total,Total,Total,z,z,z
+201415,Academic year,National,E92000001,England,,,Age group,24-30,Total,Total,Total,27000,22680,63300
+201415,Academic year,National,E92000001,England,,,Age group,31-40,Total,Total,Total,23280,19790,50800
+201415,Academic year,National,E92000001,England,,,Age group,41-50,Total,Total,Total,12850,10940,26500
+201415,Academic year,National,E92000001,England,,,Age group,50+,Total,Total,Total,4050,3440,8100
+201415,Academic year,National,E92000001,England,,,Age group,Unknown,Total,Total,Total,110,10, low
+201415,Academic year,National,E92000001,England,,,UK Status,UK,Total,Total,Total,57070,48660,125700
+201415,Academic year,National,E92000001,England,,,UK Status,Non-UK,Total,Total,Total,10210,8210,23100
+201415,Academic year,National,E92000001,England,,,Total,Total,A Level,Total,Total,820,680,500
+201415,Academic year,National,E92000001,England,,,Total,Total,QAA Access to HE,Total,Total,17060,14410,44800
+201415,Academic year,National,E92000001,England,,,Total,Total,Level 3 Certificate,Total,Total,9990,8820,9900
+201415,Academic year,National,E92000001,England,,,Total,Total,Level 3 Diploma,Total,Total,34880,29280,84800
+201415,Academic year,National,E92000001,England,,,Total,Total,Level 3 Vocational Qualification,Total,Total, low, low, low
+201415,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Certificate,Total,Total,760,630,800
+201415,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Diploma,Total,Total,3560,3040,8100
+201415,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Vocational Qualification,Total,Total, low, low, low
+201415,Academic year,National,E92000001,England,,,Total,Total,Unknown,Total,Total,230,10, low
+201415,Academic year,Regional,E92000001,England,East Midlands,E12000004,Total,Total,Total,Total,Total,4360,3770,9500
+201415,Academic year,Regional,E92000001,England,East of England,E12000006,Total,Total,Total,Total,Total,6740,5710,15200
+201415,Academic year,Regional,E92000001,England,London,E12000007,Total,Total,Total,Total,Total,12000,10160,28600
+201415,Academic year,Regional,E92000001,England,North East,E12000001,Total,Total,Total,Total,Total,5080,4270,9700
+201415,Academic year,Regional,E92000001,England,North West,E12000002,Total,Total,Total,Total,Total,10270,8650,23500
+201415,Academic year,Regional,E92000001,England,South East,E12000008,Total,Total,Total,Total,Total,6960,6050,14800
+201415,Academic year,Regional,E92000001,England,South West,E12000009,Total,Total,Total,Total,Total,7850,6470,17000
+201415,Academic year,Regional,E92000001,England,West Midlands,E12000005,Total,Total,Total,Total,Total,6150,5290,13500
+201415,Academic year,Regional,E92000001,England,Yorkshire and The Humber,E12000003,Total,Total,Total,Total,Total,6820,5820,15400
+201415,Academic year,Regional,E92000001,England,Outside of England and unknown,z,Total,Total,Total,Total,Total,1060,680,1700
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,"Agriculture, Horticulture and Animal Care",Total,1500,1310,5900
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,"Arts, Media and Publishing",Total,2390,2030,7800
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,"Business, Administration and Law",Total,9370,7720,15600
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,"Construction, Planning and the Built Environment",Total,2880,2540,9300
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,Education and Training,Total,9300,8400,13400
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,Engineering and Manufacturing Technologies,Total,1340,1170,4700
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,"Health, Public Services and Care",Total,21650,17990,50000
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,"History, Philosophy and Theology",Total,500,420,1200
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,Information and Communication Technology,Total,1030,800,2600
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,"Languages, Literature and Culture",Total,250,240,200
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,"Leisure, Travel and Tourism",Total,4970,4220,10300
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,Preparation for Life and Work,Total,10,10, low
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,Retail and Commercial Enterprise,Total,7100,6030,17000
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,Science and Mathematics,Total,1870,1580,5200
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,Social Sciences,Total,2060,1750,5100
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,Unknown/Not applicable,Total,low,low, low
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,Total,General FE College including Tertiary,44570,38430,102700
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Sixth form college,870,760,1600
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Special colleges,1320,1160,4200
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Other Public Funded,3850,3400,7000
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Schools, low, low, low
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Private Sector Public Funded,16500,13120,33300
+201415,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Unknown,180,10, low
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Total,80650,71190,195200
+201516,Academic year,National,E92000001,England,,,Gender,Male,Total,Total,Total,23810,20980,62900
+201516,Academic year,National,E92000001,England,,,Gender,Female,Total,Total,Total,56840,50210,132300
+201516,Academic year,National,E92000001,England,,,Age group,19-23,Total,Total,Total,z,z,z
+201516,Academic year,National,E92000001,England,,,Age group,24-30,Total,Total,Total,31060,27140,78400
+201516,Academic year,National,E92000001,England,,,Age group,31-40,Total,Total,Total,28470,25300,68500
+201516,Academic year,National,E92000001,England,,,Age group,41-50,Total,Total,Total,15650,13940,36000
+201516,Academic year,National,E92000001,England,,,Age group,50+,Total,Total,Total,5450,4800,12300
+201516,Academic year,National,E92000001,England,,,Age group,Unknown,Total,Total,Total,20,10, low
+201516,Academic year,National,E92000001,England,,,UK Status,UK,Total,Total,Total,65340,57330,155000
+201516,Academic year,National,E92000001,England,,,UK Status,Non-UK,Total,Total,Total,15310,13860,40200
+201516,Academic year,National,E92000001,England,,,Total,Total,A Level,Total,Total,420,340,300
+201516,Academic year,National,E92000001,England,,,Total,Total,QAA Access to HE,Total,Total,16910,14400,45700
+201516,Academic year,National,E92000001,England,,,Total,Total,Level 3 Certificate,Total,Total,8830,8070,9000
+201516,Academic year,National,E92000001,England,,,Total,Total,Level 3 Diploma,Total,Total,49640,44060,129400
+201516,Academic year,National,E92000001,England,,,Total,Total,Level 3 Vocational Qualification,Total,Total,110,100,200
+201516,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Certificate,Total,Total,900,820,1000
+201516,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Diploma,Total,Total,3760,3340,9400
+201516,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Vocational Qualification,Total,Total,60,60,100
+201516,Academic year,National,E92000001,England,,,Total,Total,Unknown,Total,Total,30,10, low
+201516,Academic year,Regional,E92000001,England,East Midlands,E12000004,Total,Total,Total,Total,Total,5760,5130,13700
+201516,Academic year,Regional,E92000001,England,East of England,E12000006,Total,Total,Total,Total,Total,6600,5740,16500
+201516,Academic year,Regional,E92000001,England,London,E12000007,Total,Total,Total,Total,Total,15530,13840,39100
+201516,Academic year,Regional,E92000001,England,North East,E12000001,Total,Total,Total,Total,Total,6170,5480,14700
+201516,Academic year,Regional,E92000001,England,North West,E12000002,Total,Total,Total,Total,Total,12600,11160,31800
+201516,Academic year,Regional,E92000001,England,South East,E12000008,Total,Total,Total,Total,Total,7810,6610,17200
+201516,Academic year,Regional,E92000001,England,South West,E12000009,Total,Total,Total,Total,Total,9030,8000,21900
+201516,Academic year,Regional,E92000001,England,West Midlands,E12000005,Total,Total,Total,Total,Total,8070,7140,19500
+201516,Academic year,Regional,E92000001,England,Yorkshire and The Humber,E12000003,Total,Total,Total,Total,Total,8470,7560,19300
+201516,Academic year,Regional,E92000001,England,Outside of England and unknown,z,Total,Total,Total,Total,Total,610,520,1500
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,"Agriculture, Horticulture and Animal Care",Total,1340,1220,5300
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,"Arts, Media and Publishing",Total,1900,1630,6600
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,"Business, Administration and Law",Total,13980,12090,27600
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,"Construction, Planning and the Built Environment",Total,3620,3290,12900
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,Education and Training,Total,9550,8830,15000
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,Engineering and Manufacturing Technologies,Total,1180,1040,4500
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,"Health, Public Services and Care",Total,24810,21640,62300
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,"History, Philosophy and Theology",Total,430,350,1000
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,Information and Communication Technology,Total,1170,1000,3400
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,"Languages, Literature and Culture",Total,290,270,200
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,"Leisure, Travel and Tourism",Total,8230,7570,20200
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,Preparation for Life and Work,Total,low,low, low
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,Retail and Commercial Enterprise,Total,9450,8330,24500
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,Science and Mathematics,Total,2090,1770,5400
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,Social Sciences,Total,2090,1730,5100
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,Unknown/Not applicable,Total,520,430,1100
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,Total,General FE College including Tertiary,43830,38290,105400
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Sixth form college,750,610,1500
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Special colleges,1200,1090,3800
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Other Public Funded,3670,3340,7300
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Schools, low, low, low
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Private Sector Public Funded,31190,27850,77300
+201516,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Unknown,20, low, low
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Total,93660,82290,236200
+201617,Academic year,National,E92000001,England,,,Gender,Male,Total,Total,Total,27560,24190,76000
+201617,Academic year,National,E92000001,England,,,Gender,Female,Total,Total,Total,66100,58100,160200
+201617,Academic year,National,E92000001,England,,,Age group,19-23,Total,Total,Total,21240,18520,59500
+201617,Academic year,National,E92000001,England,,,Age group,24-30,Total,Total,Total,27260,23680,69700
+201617,Academic year,National,E92000001,England,,,Age group,31-40,Total,Total,Total,26110,23130,62900
+201617,Academic year,National,E92000001,England,,,Age group,41-50,Total,Total,Total,14040,12510,32700
+201617,Academic year,National,E92000001,England,,,Age group,50+,Total,Total,Total,4990,4420,11300
+201617,Academic year,National,E92000001,England,,,Age group,Unknown,Total,Total,Total,30,20, low
+201617,Academic year,National,E92000001,England,,,UK Status,UK,Total,Total,Total,77540,67770,193100
+201617,Academic year,National,E92000001,England,,,UK Status,Non-UK,Total,Total,Total,16120,14520,43100
+201617,Academic year,National,E92000001,England,,,Total,Total,A Level,Total,Total,680,600,600
+201617,Academic year,National,E92000001,England,,,Total,Total,QAA Access to HE,Total,Total,20000,17030,55300
+201617,Academic year,National,E92000001,England,,,Total,Total,Level 3 Certificate,Total,Total,8650,7770,8800
+201617,Academic year,National,E92000001,England,,,Total,Total,Level 3 Diploma,Total,Total,52460,46490,145100
+201617,Academic year,National,E92000001,England,,,Total,Total,Level 3 Vocational Qualification,Total,Total,5300,4580,11300
+201617,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Certificate,Total,Total,990,890,1000
+201617,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Diploma,Total,Total,3340,3000,10200
+201617,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Vocational Qualification,Total,Total,2230,1920,3800
+201617,Academic year,National,E92000001,England,,,Total,Total,Unknown,Total,Total,30,20, low
+201617,Academic year,Regional,E92000001,England,East Midlands,E12000004,Total,Total,Total,Total,Total,6410,5620,15900
+201617,Academic year,Regional,E92000001,England,East of England,E12000006,Total,Total,Total,Total,Total,7940,6890,21600
+201617,Academic year,Regional,E92000001,England,London,E12000007,Total,Total,Total,Total,Total,17940,16280,46700
+201617,Academic year,Regional,E92000001,England,North East,E12000001,Total,Total,Total,Total,Total,7500,6410,18600
+201617,Academic year,Regional,E92000001,England,North West,E12000002,Total,Total,Total,Total,Total,12430,10760,31100
+201617,Academic year,Regional,E92000001,England,South East,E12000008,Total,Total,Total,Total,Total,8730,7720,21300
+201617,Academic year,Regional,E92000001,England,South West,E12000009,Total,Total,Total,Total,Total,10410,9100,25700
+201617,Academic year,Regional,E92000001,England,West Midlands,E12000005,Total,Total,Total,Total,Total,9240,8180,24200
+201617,Academic year,Regional,E92000001,England,Yorkshire and The Humber,E12000003,Total,Total,Total,Total,Total,12330,10670,29500
+201617,Academic year,Regional,E92000001,England,Outside of England and unknown,z,Total,Total,Total,Total,Total,730,670,1800
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,"Agriculture, Horticulture and Animal Care",Total,2140,1910,9700
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,"Arts, Media and Publishing",Total,4030,3540,15100
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,"Business, Administration and Law",Total,13600,11970,28700
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,"Construction, Planning and the Built Environment",Total,3790,3370,13300
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,Education and Training,Total,9010,8150,15000
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,Engineering and Manufacturing Technologies,Total,1850,1640,7000
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,"Health, Public Services and Care",Total,28140,24640,69100
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,"History, Philosophy and Theology",Total,550,460,1300
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,Information and Communication Technology,Total,1690,1430,5300
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,"Languages, Literature and Culture",Total,320,310,400
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,"Leisure, Travel and Tourism",Total,8520,7580,19700
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,Preparation for Life and Work,Total,10,10, low
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,Retail and Commercial Enterprise,Total,14170,12330,36500
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,Science and Mathematics,Total,3150,2740,8400
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,Social Sciences,Total,2670,2220,6500
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,Unknown/Not applicable,Total,low,low, low
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,Total,General FE College including Tertiary,51530,45560,131100
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Sixth form college,990,910,2100
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Special colleges,1700,1530,6000
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Other Public Funded,3860,3560,8500
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Schools,130,110,200
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Private Sector Public Funded,35420,30600,88300
+201617,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Unknown,30,20, low
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Total,81510,71460,208000
+201718,Academic year,National,E92000001,England,,,Gender,Male,Total,Total,Total,24420,21440,68200
+201718,Academic year,National,E92000001,England,,,Gender,Female,Total,Total,Total,57090,50020,139800
+201718,Academic year,National,E92000001,England,,,Age group,19-23,Total,Total,Total,19390,16570,53800
+201718,Academic year,National,E92000001,England,,,Age group,24-30,Total,Total,Total,22930,19950,59100
+201718,Academic year,National,E92000001,England,,,Age group,31-40,Total,Total,Total,22900,20370,56500
+201718,Academic year,National,E92000001,England,,,Age group,41-50,Total,Total,Total,12010,10770,28700
+201718,Academic year,National,E92000001,England,,,Age group,50+,Total,Total,Total,4250,3780,9800
+201718,Academic year,National,E92000001,England,,,Age group,Unknown,Total,Total,Total,30,20,100
+201718,Academic year,National,E92000001,England,,,UK Status,UK,Total,Total,Total,67710,59030,171000
+201718,Academic year,National,E92000001,England,,,UK Status,Non-UK,Total,Total,Total,13790,12430,37000
+201718,Academic year,National,E92000001,England,,,Total,Total,A Level,Total,Total,520,400,500
+201718,Academic year,National,E92000001,England,,,Total,Total,QAA Access to HE,Total,Total,18270,15320,50000
+201718,Academic year,National,E92000001,England,,,Total,Total,Level 3 Certificate,Total,Total,6250,5650,6600
+201718,Academic year,National,E92000001,England,,,Total,Total,Level 3 Diploma,Total,Total,44990,40130,123700
+201718,Academic year,National,E92000001,England,,,Total,Total,Level 3 Vocational Qualification,Total,Total,5290,4490,12500
+201718,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Certificate,Total,Total,1130,1010,1100
+201718,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Diploma,Total,Total,3510,3120,10900
+201718,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Vocational Qualification,Total,Total,1520,1320,2700
+201718,Academic year,National,E92000001,England,,,Total,Total,Unknown,Total,Total,30,20,100
+201718,Academic year,Regional,E92000001,England,East Midlands,E12000004,Total,Total,Total,Total,Total,4650,4120,11800
+201718,Academic year,Regional,E92000001,England,East of England,E12000006,Total,Total,Total,Total,Total,6410,5640,18300
+201718,Academic year,Regional,E92000001,England,London,E12000007,Total,Total,Total,Total,Total,15430,13870,40400
+201718,Academic year,Regional,E92000001,England,North East,E12000001,Total,Total,Total,Total,Total,7770,6800,19000
+201718,Academic year,Regional,E92000001,England,North West,E12000002,Total,Total,Total,Total,Total,11080,9550,27800
+201718,Academic year,Regional,E92000001,England,South East,E12000008,Total,Total,Total,Total,Total,7370,6510,18800
+201718,Academic year,Regional,E92000001,England,South West,E12000009,Total,Total,Total,Total,Total,9590,8400,23800
+201718,Academic year,Regional,E92000001,England,West Midlands,E12000005,Total,Total,Total,Total,Total,8920,7770,23600
+201718,Academic year,Regional,E92000001,England,Yorkshire and The Humber,E12000003,Total,Total,Total,Total,Total,8940,7620,21400
+201718,Academic year,Regional,E92000001,England,Outside of England and unknown,z,Total,Total,Total,Total,Total,1350,1190,3000
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,"Agriculture, Horticulture and Animal Care",Total,1890,1640,8300
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,"Arts, Media and Publishing",Total,3690,3200,13800
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,"Business, Administration and Law",Total,9920,8800,20800
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,"Construction, Planning and the Built Environment",Total,3710,3310,13100
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,Education and Training,Total,7210,6500,12300
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,Engineering and Manufacturing Technologies,Total,2090,1800,7500
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,"Health, Public Services and Care",Total,23320,20160,57300
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,"History, Philosophy and Theology",Total,510,430,1200
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,Information and Communication Technology,Total,1450,1260,4700
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,"Languages, Literature and Culture",Total,330,320,400
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,"Leisure, Travel and Tourism",Total,7830,7130,18900
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,Preparation for Life and Work,Total, low, low, low
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,Retail and Commercial Enterprise,Total,12010,10510,30800
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,Science and Mathematics,Total,2770,2320,7300
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,Social Sciences,Total,2510,2060,6100
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,Unknown/Not applicable,Total,2260,2030,5500
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,Total,General FE College including Tertiary,44340,39050,113800
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Sixth form college,840,740,1800
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Special colleges,1600,1380,5100
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Other Public Funded,4110,3690,9500
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Schools,120,110,300
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Private Sector Public Funded,30460,26480,77500
+201718,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Unknown,30,20,100
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Total,77610,68330,200300
+201819,Academic year,National,E92000001,England,,,Gender,Male,Total,Total,Total,21780,19000,61100
+201819,Academic year,National,E92000001,England,,,Gender,Female,Total,Total,Total,55820,49330,139200
+201819,Academic year,National,E92000001,England,,,Age group,19-23,Total,Total,Total,18200,15590,51000
+201819,Academic year,National,E92000001,England,,,Age group,24-30,Total,Total,Total,21410,18690,56300
+201819,Academic year,National,E92000001,England,,,Age group,31-40,Total,Total,Total,22290,20020,55800
+201819,Academic year,National,E92000001,England,,,Age group,41-50,Total,Total,Total,11310,10140,27100
+201819,Academic year,National,E92000001,England,,,Age group,50+,Total,Total,Total,4380,3890,10100
+201819,Academic year,National,E92000001,England,,,Age group,Unknown,Total,Total,Total,20,10,low
+201819,Academic year,National,E92000001,England,,,UK Status,UK,Total,Total,Total,64330,56320,164200
+201819,Academic year,National,E92000001,England,,,UK Status,Non-UK,Total,Total,Total,13280,12020,36100
+201819,Academic year,National,E92000001,England,,,Total,Total,A Level,Total,Total,440,340,400
+201819,Academic year,National,E92000001,England,,,Total,Total,QAA Access to HE,Total,Total,17570,14790,48300
+201819,Academic year,National,E92000001,England,,,Total,Total,Level 3 Certificate,Total,Total,5680,5150,5800
+201819,Academic year,National,E92000001,England,,,Total,Total,Level 3 Diploma,Total,Total,42620,38090,116700
+201819,Academic year,National,E92000001,England,,,Total,Total,Level 3 Vocational Qualification,Total,Total,4790,4200,12900
+201819,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Certificate,Total,Total,1300,1210,1300
+201819,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Diploma,Total,Total,3760,3300,12000
+201819,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Vocational Qualification,Total,Total,1430,1250,2800
+201819,Academic year,National,E92000001,England,,,Total,Total,Unknown,Total,Total,20,10, low 
+201819,Academic year,Regional,E92000001,England,East Midlands,E12000004,Total,Total,Total,Total,Total,4600,4040,11500
+201819,Academic year,Regional,E92000001,England,East of England,E12000006,Total,Total,Total,Total,Total,6830,6120,20100
+201819,Academic year,Regional,E92000001,England,London,E12000007,Total,Total,Total,Total,Total,13260,11950,35300
+201819,Academic year,Regional,E92000001,England,North East,E12000001,Total,Total,Total,Total,Total,5460,4800,13700
+201819,Academic year,Regional,E92000001,England,North West,E12000002,Total,Total,Total,Total,Total,10790,9410,26900
+201819,Academic year,Regional,E92000001,England,South East,E12000008,Total,Total,Total,Total,Total,7680,6830,20000
+201819,Academic year,Regional,E92000001,England,South West,E12000009,Total,Total,Total,Total,Total,9230,8120,22500
+201819,Academic year,Regional,E92000001,England,West Midlands,E12000005,Total,Total,Total,Total,Total,8960,7690,23600
+201819,Academic year,Regional,E92000001,England,Yorkshire and The Humber,E12000003,Total,Total,Total,Total,Total,8170,7160,21000
+201819,Academic year,Regional,E92000001,England,Outside of England and unknown,z,Total,Total,Total,Total,Total,2620,2220,5900
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,"Agriculture, Horticulture and Animal Care",Total,1920,1710,8700
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,"Arts, Media and Publishing",Total,3490,3030,13500
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,"Business, Administration and Law",Total,9880,8820,22000
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,"Construction, Planning and the Built Environment",Total,3150,2740,10600
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,Education and Training,Total,5950,5420,10200
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,Engineering and Manufacturing Technologies,Total,1990,1660,7200
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,"Health, Public Services and Care",Total,25200,22210,61600
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,"History, Philosophy and Theology",Total,430,360,1100
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,Information and Communication Technology,Total,1190,1000,4000
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,"Languages, Literature and Culture",Total,290,270,300
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,"Leisure, Travel and Tourism",Total,6900,6260,16200
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,Preparation for Life and Work,Total, low , low , low 
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,Retail and Commercial Enterprise,Total,11990,10500,31700
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,Science and Mathematics,Total,2590,2170,6800
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,Social Sciences,Total,2630,2170,6400
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,Unknown/Not applicable,Total,10,10, low 
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,Total,General FE College including Tertiary,44060,38770,112700
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Sixth form college,610,540,1300
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Special colleges,1680,1490,5700
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Other Public Funded,3220,2860,7300
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Schools,10,10, low 
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Private Sector Public Funded,28030,24660,73300
+201819,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Unknown,10, low , low 
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Total,69400,61280,182400
+201920,Academic year,National,E92000001,England,,,Gender,Male,Total,Total,Total,19240,16890,55800
+201920,Academic year,National,E92000001,England,,,Gender,Female,Total,Total,Total,50160,44390,126700
+201920,Academic year,National,E92000001,England,,,Age group,19-23,Total,Total,Total,15530,13660,45300
+201920,Academic year,National,E92000001,England,,,Age group,24-30,Total,Total,Total,18490,16100,49300
+201920,Academic year,National,E92000001,England,,,Age group,31-40,Total,Total,Total,21060,18710,53400
+201920,Academic year,National,E92000001,England,,,Age group,41-50,Total,Total,Total,10390,9300,25100
+201920,Academic year,National,E92000001,England,,,Age group,50+,Total,Total,Total,3930,3510,9300
+201920,Academic year,National,E92000001,England,,,Age group,Unknown,Total,Total,Total,10,low,low
+201920,Academic year,National,E92000001,England,,,UK Status,UK,Total,Total,Total,57450,50270,148700
+201920,Academic year,National,E92000001,England,,,UK Status,Non-UK,Total,Total,Total,11950,11010,33800
+201920,Academic year,National,E92000001,England,,,Total,Total,A Level,Total,Total,340,270,400
+201920,Academic year,National,E92000001,England,,,Total,Total,QAA Access to HE,Total,Total,15840,13930,45600
+201920,Academic year,National,E92000001,England,,,Total,Total,Level 3 Certificate,Total,Total,5110,4630,5200
+201920,Academic year,National,E92000001,England,,,Total,Total,Level 3 Diploma,Total,Total,37450,33080,102700
+201920,Academic year,National,E92000001,England,,,Total,Total,Level 3 Vocational Qualification,Total,Total,4540,3970,13000
+201920,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Certificate,Total,Total,1070,970,1000
+201920,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Diploma,Total,Total,3840,3400,12000
+201920,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Vocational Qualification,Total,Total,1200,1040,2500
+201920,Academic year,National,E92000001,England,,,Total,Total,Unknown,Total,Total,20,low,low
+201920,Academic year,Regional,E92000001,England,East Midlands,E12000004,Total,Total,Total,Total,Total,4080,3630,10700
+201920,Academic year,Regional,E92000001,England,East of England,E12000006,Total,Total,Total,Total,Total,5690,5070,16000
+201920,Academic year,Regional,E92000001,England,London,E12000007,Total,Total,Total,Total,Total,11610,10690,32500
+201920,Academic year,Regional,E92000001,England,North East,E12000001,Total,Total,Total,Total,Total,5180,4620,13200
+201920,Academic year,Regional,E92000001,England,North West,E12000002,Total,Total,Total,Total,Total,9260,8000,22800
+201920,Academic year,Regional,E92000001,England,South East,E12000008,Total,Total,Total,Total,Total,6600,5930,18400
+201920,Academic year,Regional,E92000001,England,South West,E12000009,Total,Total,Total,Total,Total,9150,7840,22200
+201920,Academic year,Regional,E92000001,England,West Midlands,E12000005,Total,Total,Total,Total,Total,8310,7240,22900
+201920,Academic year,Regional,E92000001,England,Yorkshire and The Humber,E12000003,Total,Total,Total,Total,Total,6860,6020,17700
+201920,Academic year,Regional,E92000001,England,Outside of England and unknown,z,Total,Total,Total,Total,Total,2680,2230,6000
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,"Agriculture, Horticulture and Animal Care",Total,1740,1530,7300
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,"Arts, Media and Publishing",Total,3080,2740,12200
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,"Business, Administration and Law",Total,7890,7150,18000
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,"Construction, Planning and the Built Environment",Total,2550,2310,8900
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,Education and Training,Total,4920,4480,8200
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,Engineering and Manufacturing Technologies,Total,2100,1780,8300
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,"Health, Public Services and Care",Total,21070,18720,51900
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,"History, Philosophy and Theology",Total,70,60,100
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,Information and Communication Technology,Total,890,770,3000
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,"Languages, Literature and Culture",Total,280,240,400
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,"Leisure, Travel and Tourism",Total,6080,5280,13700
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,Preparation for Life and Work,Total,low,low,low
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,Retail and Commercial Enterprise,Total,10780,9260,28500
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,Science and Mathematics,Total,1810,1570,4900
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,Social Sciences,Total,1890,1640,4800
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,Unknown/Not applicable,Total,4270,3760,12000
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,Total,General FE College including Tertiary,41740,37260,110600
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Sixth form college,560,500,1300
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Special colleges,1440,1280,4900
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Other Public Funded,2960,2640,7200
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Schools,low,low,low
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Private Sector Public Funded,22700,19590,58500
+201920,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Unknown,low,low,low
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Total,62870,55350,166900
+202021,Academic year,National,E92000001,England,,,Gender,Male,Total,Total,Total,15330,13500,45700
+202021,Academic year,National,E92000001,England,,,Gender,Female,Total,Total,Total,47540,41850,121300
+202021,Academic year,National,E92000001,England,,,Age group,19-23,Total,Total,Total,14600,12810,42600
+202021,Academic year,National,E92000001,England,,,Age group,24-30,Total,Total,Total,17080,14810,45900
+202021,Academic year,National,E92000001,England,,,Age group,31-40,Total,Total,Total,18770,16660,48200
+202021,Academic year,National,E92000001,England,,,Age group,41-50,Total,Total,Total,8940,8020,22200
+202021,Academic year,National,E92000001,England,,,Age group,50+,Total,Total,Total,3480,3050,8100
+202021,Academic year,National,E92000001,England,,,Age group,Unknown,Total,Total,Total,10,low,low
+202021,Academic year,National,E92000001,England,,,UK Status,UK,Total,Total,Total,52670,45960,138000
+202021,Academic year,National,E92000001,England,,,UK Status,Non-UK,Total,Total,Total,10200,9390,29000
+202021,Academic year,National,E92000001,England,,,Total,Total,A Level,Total,Total,250,200,300
+202021,Academic year,National,E92000001,England,,,Total,Total,QAA Access to HE,Total,Total,18000,15460,50600
+202021,Academic year,National,E92000001,England,,,Total,Total,Level 3 Certificate,Total,Total,4130,3680,4200
+202021,Academic year,National,E92000001,England,,,Total,Total,Level 3 Diploma,Total,Total,28630,25530,79000
+202021,Academic year,National,E92000001,England,,,Total,Total,Level 3 Vocational Qualification,Total,Total,6140,5470,18600
+202021,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Certificate,Total,Total,900,820,900
+202021,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Diploma,Total,Total,3840,3330,11400
+202021,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Vocational Qualification,Total,Total,970,860,2000
+202021,Academic year,National,E92000001,England,,,Total,Total,Unknown,Total,Total,10,low,low
+202021,Academic year,Regional,E92000001,England,East Midlands,E12000004,Total,Total,Total,Total,Total,3900,3410,10100
+202021,Academic year,Regional,E92000001,England,East of England,E12000006,Total,Total,Total,Total,Total,6300,5620,17400
+202021,Academic year,Regional,E92000001,England,London,E12000007,Total,Total,Total,Total,Total,10180,9340,29000
+202021,Academic year,Regional,E92000001,England,North East,E12000001,Total,Total,Total,Total,Total,5340,4730,14300
+202021,Academic year,Regional,E92000001,England,North West,E12000002,Total,Total,Total,Total,Total,8370,7230,20600
+202021,Academic year,Regional,E92000001,England,South East,E12000008,Total,Total,Total,Total,Total,6250,5530,17600
+202021,Academic year,Regional,E92000001,England,South West,E12000009,Total,Total,Total,Total,Total,5970,5220,15100
+202021,Academic year,Regional,E92000001,England,West Midlands,E12000005,Total,Total,Total,Total,Total,7300,6350,20000
+202021,Academic year,Regional,E92000001,England,Yorkshire and The Humber,E12000003,Total,Total,Total,Total,Total,6720,5960,17700
+202021,Academic year,Regional,E92000001,England,Outside of England and unknown,z,Total,Total,Total,Total,Total,2540,1960,5000
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,"Agriculture, Horticulture and Animal Care",Total,1480,1320,6200
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,"Arts, Media and Publishing",Total,2380,2130,9100
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,"Business, Administration and Law",Total,6550,5880,15200
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,"Construction, Planning and the Built Environment",Total,1520,1380,5800
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,Education and Training,Total,3710,3380,6300
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,Engineering and Manufacturing Technologies,Total,1920,1610,7400
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,"Health, Public Services and Care",Total,19520,17090,48200
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,"History, Philosophy and Theology",Total,60,50,100
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,Information and Communication Technology,Total,630,540,2000
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,"Languages, Literature and Culture",Total,210,190,400
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,"Leisure, Travel and Tourism",Total,2580,2420,5600
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,Preparation for Life and Work,Total,low,low,low
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,Retail and Commercial Enterprise,Total,10450,9140,28200
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,Science and Mathematics,Total,1620,1400,4400
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,Social Sciences,Total,1670,1390,4000
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,Unknown/Not applicable,Total,8580,7430,24200
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,Total,General FE College including Tertiary,38050,33520,101400
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Sixth form college,390,320,800
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Special colleges,1390,1240,4900
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Other Public Funded,2410,2170,6000
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Schools,low,low,low
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Private Sector Public Funded,20620,18110,53800
+202021,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Unknown,10,low,low
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Total,49210,42470,130400
+202122,Academic year,National,E92000001,England,,,Gender,Male,Total,Total,Total,11280,9800,32700
+202122,Academic year,National,E92000001,England,,,Gender,Female,Total,Total,Total,37930,32670,97700
+202122,Academic year,National,E92000001,England,,,Age group,19-23,Total,Total,Total,11750,10140,34800
+202122,Academic year,National,E92000001,England,,,Age group,24-30,Total,Total,Total,12990,11050,34600
+202122,Academic year,National,E92000001,England,,,Age group,31-40,Total,Total,Total,14980,12990,37800
+202122,Academic year,National,E92000001,England,,,Age group,41-50,Total,Total,Total,6920,6060,17100
+202122,Academic year,National,E92000001,England,,,Age group,50+,Total,Total,Total,2570,2230,6100
+202122,Academic year,National,E92000001,England,,,Age group,Unknown,Total,Total,Total,low,low,low
+202122,Academic year,National,E92000001,England,,,UK Status,UK,Total,Total,Total,42150,36060,110200
+202122,Academic year,National,E92000001,England,,,UK Status,Non-UK,Total,Total,Total,7060,6410,20200
+202122,Academic year,National,E92000001,England,,,Total,Total,A Level,Total,Total,220,180,300
+202122,Academic year,National,E92000001,England,,,Total,Total,QAA Access to HE,Total,Total,15060,12720,41600
+202122,Academic year,National,E92000001,England,,,Total,Total,Level 3 Certificate,Total,Total,2800,2470,2700
+202122,Academic year,National,E92000001,England,,,Total,Total,Level 3 Diploma,Total,Total,21770,18980,59500
+202122,Academic year,National,E92000001,England,,,Total,Total,Level 3 Vocational Qualification,Total,Total,4480,3860,13300
+202122,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Certificate,Total,Total,750,700,800
+202122,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Diploma,Total,Total,3320,2870,10500
+202122,Academic year,National,E92000001,England,,,Total,Total,Level 4+ Vocational Qualification,Total,Total,820,700,1600
+202122,Academic year,National,E92000001,England,,,Total,Total,Unknown,Total,Total,10,low,low
+202122,Academic year,Regional,E92000001,England,East Midlands,E12000004,Total,Total,Total,Total,Total,3170,2740,8200
+202122,Academic year,Regional,E92000001,England,East of England,E12000006,Total,Total,Total,Total,Total,4820,4200,13200
+202122,Academic year,Regional,E92000001,England,London,E12000007,Total,Total,Total,Total,Total,6880,6140,19000
+202122,Academic year,Regional,E92000001,England,North East,E12000001,Total,Total,Total,Total,Total,4360,3830,11800
+202122,Academic year,Regional,E92000001,England,North West,E12000002,Total,Total,Total,Total,Total,6670,5520,16500
+202122,Academic year,Regional,E92000001,England,South East,E12000008,Total,Total,Total,Total,Total,5190,4530,14800
+202122,Academic year,Regional,E92000001,England,South West,E12000009,Total,Total,Total,Total,Total,4280,3720,11300
+202122,Academic year,Regional,E92000001,England,West Midlands,E12000005,Total,Total,Total,Total,Total,6110,5290,16900
+202122,Academic year,Regional,E92000001,England,Yorkshire and The Humber,E12000003,Total,Total,Total,Total,Total,6050,5190,15500
+202122,Academic year,Regional,E92000001,England,Outside of England and unknown,z,Total,Total,Total,Total,Total,1680,1310,3200
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,"Agriculture, Horticulture and Animal Care",Total,1400,1220,6000
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,"Arts, Media and Publishing",Total,3020,2650,11800
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,"Business, Administration and Law",Total,3750,3260,8900
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,"Construction, Planning and the Built Environment",Total,740,670,2600
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,Education and Training,Total,2900,2620,4900
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,Engineering and Manufacturing Technologies,Total,1260,1090,4600
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,"Health, Public Services and Care",Total,18300,15720,45600
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,"History, Philosophy and Theology",Total,110,100,300
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,Information and Communication Technology,Total,690,580,2400
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,"Languages, Literature and Culture",Total,250,200,400
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,"Leisure, Travel and Tourism",Total,2530,2240,5300
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,Preparation for Life and Work,Total,low,low,low
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,Retail and Commercial Enterprise,Total,10600,9070,28300
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,Science and Mathematics,Total,1950,1670,5200
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,Social Sciences,Total,1700,1410,4100
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,Unknown/Not applicable,Total,10,low,low
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,Total,General FE College including Tertiary,30330,26330,80600
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Sixth form college,330,280,700
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Special colleges,1150,1010,4200
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Other Public Funded,1810,1590,4800
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Schools,low,low,low
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Private Sector Public Funded,15590,13250,40000
+202122,Academic year,National,E92000001,England,,,Total,Total,Total,Total,Unknown,low,low,low

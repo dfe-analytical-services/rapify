@@ -1,0 +1,8 @@
+﻿col_name,col_type,label,indicator_grouping,indicator_unit,indicator_dp,filter_hint,filter_grouping_column
+apps_received,Indicator,Received applications,Applications,,0,,
+apps_approved,Indicator,Approved applications,Applications,,0,,
+loan_amount_awarded_in_thousands,Indicator,Total loan amount awarded (£000s),Loan Amount,£,0,,
+characteristic,Filter,Characteristic,,,,,characteristic_group
+qualification_type,Filter,Qualification type,,,,,
+ssa_t1_desc,Filter,Sector subject area (tier 1),,,,,
+provider_type,Filter,Provider type,,,,,

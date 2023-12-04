@@ -34,7 +34,15 @@ wide <- x  %>% rename(breakdown_topic = characteristic_group, breakdown = charac
 
 
 
+tidy_the_data <- function(){
 
+  
+  
+  
+  
+  
+  
+  
 wide <- get_wide_data()
 
 tidy <- wide %>% 
@@ -50,14 +58,36 @@ tidy <- wide %>%
 
 
 
+}
+
+
+
+
+
+
+
+clean_data <- function(wide, tidy){
+
 wide[is.na(wide)] <- 'x'
-wide %>% write.csv('data/tutorials/wide2tidy_input.csv')
+wide %>% write.csv('data/tutorials/wide2tidy_input.csv',row.names = FALSE)
+tidy$achievement <- gsub('_',' ',tidy$achievement)
+tidy$achievement <- gsub('othl2','OTHL',tidy$achievement)
+tidy$achievement <- gsub(' eng ',' Engineering ',tidy$achievement)
+tidy$achievement <- gsub(' maths ',' Maths ',tidy$achievement)
+tidy$achievement <- gsub('fsq','FSQ',tidy$achievement)
+tidy$achievement <- gsub(' ac',' AC',tidy$achievement)
+tidy$achievement <- gsub(' em',' EM',tidy$achievement)
+tidy$achievement <- gsub('l2','Level 2',tidy$achievement)
+tidy$achievement <- gsub('l3','Level 3',tidy$achievement)
+tidy$achievement <- gsub('level','Level',tidy$achievement)
+tidy$achievement <- gsub('in ss cohort','State sector cohort',tidy$achievement)
+tidy$achievement <- gsub('gcse','GCSE',tidy$achievement)
 tidy[is.na(tidy)] <- 'x'
-tidy %>% write.csv('data/tutorials/wide2tidy_result.csv')
+tidy %>% write.csv('data/tutorials/wide2tidy_result.csv',row.names = FALSE)
 
 
 
-
+}
 
 
 

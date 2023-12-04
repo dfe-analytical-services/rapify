@@ -1,0 +1,5 @@
+"col_name","col_type","label","indicator_grouping","indicator_unit","indicator_dp","filter_hint","filter_grouping_column"
+age,Filter,Age group,,,,,
+level_3,Indicator,Level 3,,,0,,
+level_4,Indicator,Level 4+,,,0,,
+total_learners,Indicator,Learners,,,0,,

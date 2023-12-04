@@ -1,12 +1,11 @@
 col_name,col_type,label,indicator_grouping,indicator_unit,indicator_dp,filter_hint,filter_grouping_column
 age,Filter,Age,,,,,
-breakdown_topic,Filter,Breakdown topic,,,,,
-breakdown,Filter,Breakdown,,,,,
+breakdown,Filter,Breakdown,,,,,breakdown_topic
 number-in_ss_cohort,Indicator,Number in state school cohort,,,0,,
-percentage-l2,Indicator,Percentage achieving Level 2,,,1,,
-number-l2,Indicator,Number achieving Level 2,,,0,,
-percentage-l3,Indicator,Percentage achieving Level 3,,,1,,
-number-l3,Indicator,Number achieving Level 3,,,0,,
+percentage-level_2,Indicator,Percentage achieving Level 2,,,1,,
+number-level_2,Indicator,Number achieving Level 2,,,0,,
+percentage-level_3,Indicator,Percentage achieving Level 3,,,1,,
+number-level_3,Indicator,Number achieving Level 3,,,0,,
 percentage-l2_eng_gcse_ac,Indicator,Percentage achieving Level 2 Engineering GCSE AC,,,1,,
 number-l2_eng_gcse_ac,Indicator,Number achieving Level 2 Engineering GCSE AC,,,0,,
 percentage-l2_eng_gcse_othl2,Indicator,Percentage achieving Level 2 Engineering GCSE OTHL,,,1,,
