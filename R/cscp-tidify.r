@@ -2,17 +2,21 @@ library(readxl)
 library(dplyr)
 library(tidyr)
 
+las <- readr::read_csv("https://raw.githubusercontent.com/dfe-analytical-services/dfe-published-data-qa/master/data/las.csv") %>%
+  filter(status == "live" | old_la_code == "909") %>%
+  select(new_la_code, la_name, old_la_code) %>%
+  distinct()
+
+read_ks4_data <-  function(){
+  
+ read_xlsx("data/cscp_raw/2022-2023_england_ks4_provisional.xlsx") %>%
+  filter(!is.na(LEA)) %>%
+  mutate(across(where(is.numeric), format, scientific = FALSE, trim = TRUE))
+}
+
 
 tidy_progress8 <- function() {
-  las <- readr::read_csv("https://raw.githubusercontent.com/dfe-analytical-services/dfe-published-data-qa/master/data/las.csv") %>%
-    filter(status == "live" | old_la_code == "909") %>%
-    select(new_la_code, la_name, old_la_code) %>%
-    distinct()
-
-  ks4_data <- read_xlsx("data/cscp_raw/2022-2023_england_ks4_provisional.xlsx") %>%
-    filter(!is.na(LEA)) %>%
-    mutate(across(where(is.numeric), format, scientific = FALSE, trim = TRUE))
-
+  ks4_data <- read_ks4_data()
 
   info_cols <- c(
     "RECTYPE", "SCHNAME_AC",
