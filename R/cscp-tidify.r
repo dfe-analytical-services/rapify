@@ -23,17 +23,18 @@ ks4_sex <- ks4_data_noinfo %>%
 attainment_counts <- c("TPRIORLO", "TPRIORAV", "TPRIORHI")
 attainment_percents <- c("PTPRIORLO", "PTPRIORAV", "PTPRIORHI")
 
+info_cols <- c(
+  "RECTYPE", "SCHNAME_AC",
+  "ADDRESS1", "ADDRESS2", "ADDRESS3", "TOWN", "PCODE", "TELNUM",
+  "CONTFLAG", "ICLOSE", "NFTYPE", "RELDENOM", "ADMPOL", "ADMPOL_PT", "EGENDER",
+  "FEEDER", "TABKS2", "TAB1618", "AGERANGE"
+)
+
+school_info <- ks4_data %>% select(all_of(c("LEA", "ESTAB", "URN", "SCHNAME", info_cols)))
+
+
 tidy_progress8 <- function() {
   ks4_data <- read_ks4_data()
-
-  info_cols <- c(
-    "RECTYPE", "SCHNAME_AC",
-    "ADDRESS1", "ADDRESS2", "ADDRESS3", "TOWN", "PCODE", "TELNUM",
-    "CONTFLAG", "ICLOSE", "NFTYPE", "RELDENOM", "ADMPOL", "ADMPOL_PT", "EGENDER",
-    "FEEDER", "TABKS2", "TAB1618", "AGERANGE"
-  )
-
-  school_info <- ks4_data %>% select(all_of(c("LEA", "ESTAB", "URN", "SCHNAME", info_cols)))
 
   ks4_data_noinfo <- ks4_data %>%
     select(-all_of(info_cols))
@@ -184,7 +185,6 @@ tidy_progress8 <- function() {
     ) %>%
     arrange(-as.numeric(time_period), old_la_code, school_laestab, version, sex, free_school_meal_status, eal_status, mobility_status, attainment_area)
 
-  print(ks4_p8_ees, n = 240)
   write.csv(
     ks4_p8_ees %>%
       filter(geographic_level == "School"),
@@ -215,26 +215,174 @@ tidy_progress8 <- function() {
 
 ks4_attainment8 <- function(){
   ks4_data <- read_ks4_data()
-}
+  a8cols <- names(ks4_data) %>%
+    as.data.frame() %>%
+    filter(grepl("ATT8", .), !(. %in% p8_id_cols)) %>%
+    pull(.)
 
-library(dplyr)
-ks4_data <- read_ks4_data() %>% select(LEA, ESTAB, URN)
-
-create_laestab <- function(la_code, estab_code){
-  if_else(ESTAB=='NA', 'NA', paste0(la_code, estab_code))
-}
-
-ks4_data %>% mutate(
-  laestab = create_laestab("LAE", "ESTAB")
-)
-
-
-sw_time_in_service_2022 %>%
-  group_by(`Time in service`) %>%
-  summarise(
-    across(
-      prop_less_than_2_year_fte:prop_more_than_30_year, 
-      mean, na.rm = TRUE, 
-      .names = "mean_{.col}"
+  ks4_data_noinfo <- ks4_data %>%
+    select(-all_of(info_cols))
+  
+  ks4_a8 <- ks4_data_noinfo %>%
+    select(all_of(c("LEA", "ESTAB", "URN", "SCHNAME", a8cols))) %>%
+    pivot_longer(-all_of(c("LEA", "ESTAB", "URN", "SCHNAME")), names_to = "master_filter")  %>%
+    mutate(
+      metric = case_when(
+        grepl("ATT8SCR", master_filter) ~ "attainment_score",
+        grepl("TOTATT8", master_filter) ~ "pupil_count",
+        .default = "dunno_yet"
+      ),
+      sex = case_when(
+        grepl("BOYS", master_filter) ~ "Male",
+        grepl("GIRLS", master_filter) ~ "Female",
+        .default = "All pupils"
+      ),
+      free_school_meal_status = case_when(
+        grepl("_NFSM", master_filter) ~ "Not free school meals",
+        grepl("_FSM", master_filter) ~ "Free school meals",
+        .default = "All pupils"
+      ),
+      time_period = case_when(
+        grepl("_22", master_filter) ~ "202122",
+        grepl("_21", master_filter) ~ "202021",
+        .default = "202223"
+      ),
+      mobility_status = case_when(
+        grepl("NMOB", master_filter) ~ "Non-mobile",
+        .default = "All pupils"
+      ),
+      eal_status = case_when(
+        grepl("EAL", master_filter) ~ "English as another language",
+        .default = "All pupils"
+      ),
+      attainment_area = case_when(
+        grepl("OPENNG", master_filter) ~ "Open NG",
+        grepl("OPENG", master_filter) ~ "Open G",
+        grepl("OPEN", master_filter) ~ "Open",
+        grepl("ENG", master_filter) ~ "English",
+        grepl("MAT", master_filter) ~ "Maths",
+        grepl("EBAC", master_filter) ~ "EBACC pupils",
+        grepl("DIFFN_ATT8", master_filter) ~ "Suspect this belongs somewhere else, but don't know what it is so leaving it here for now",
+        .default = "All subjects"
+      ),
+      prior_attainment = case_when(
+        grepl("_LO", master_filter) ~ "Low",
+        grepl("_MID", master_filter) ~ "Mid",
+        grepl("_HI", master_filter) ~ "High",
+        .default = "All pupils"
+      ),
+      value = case_when(
+        value == "NE" ~ "z",
+        value == "NP" ~ "x",
+        value == "SUPP" ~ "c",
+        value == "LOWCOV" ~ "low",
+        stringr::str_trim(value) == "NA" ~ "z",
+        is.na(value) ~ "z",
+        .default = format(round(as.numeric(value), digits = 2), digits = 2, scientific = FALSE, trim = TRUE)
       )
     )
+
+  ks4_a8 %>% filter(
+    URN=='100003', 
+    sex=='All pupils', 
+    time_period=='202223', 
+    free_school_meal_status == 'All pupils', 
+    mobility_status == 'All pupils', 
+    eal_status=='All pupils', 
+    attainment_area=='English', 
+    prior_attainment=='All pupils'
+    ) %>%
+    arrange(metric, master_filter) %>%
+    print(n=50)
+  
+  ks4_a8_tidied <- ks4_a8 %>%
+    select(-master_filter) %>%
+    pivot_wider(names_from = metric, values_from = value) %>%
+    left_join(las, by = join_by(LEA == old_la_code))
+  
+  
+  ks4_a8_ees <- ks4_a8_tidied %>%
+    mutate(
+      across(c("pupil_count", "attainment_score"), ~  if_else(is.na(.), 'x', .)),
+      school_laestab = case_when(
+        is.na(ESTAB) ~ "",
+        ESTAB == "NA" ~ "",
+        .default = paste0(LEA, ESTAB)
+      ),
+      school_urn = case_when(
+        is.na(URN) ~ "",
+        URN == "NA" ~ "",
+        .default = paste0(URN)
+      ),
+      school_name = case_when(
+        is.na(SCHNAME) ~ "",
+        SCHNAME == "NA" ~ "",
+        .default = SCHNAME
+      ),
+      time_identifier = "Academic year",
+      geographic_level = case_when(
+        is.na(ESTAB) ~ "Local authority",
+        ESTAB == "NA" ~ "Local authority",
+        .default = "School"
+      ),
+      country_code = "E92000001",
+      country_name = "England"
+    ) %>%
+    select(
+      time_period,
+      time_identifier,
+      geographic_level,
+      country_code,
+      country_name,
+      old_la_code = LEA,
+      new_la_code,
+      la_name,
+      school_laestab,
+      school_urn,
+      school_name,
+      sex,
+      free_school_meal_status,
+      eal_status,
+      mobility_status,
+      prior_attainment,
+      attainment_area,
+      pupil_count,
+      attainment_score,
+    ) %>%
+    arrange(-as.numeric(time_period), old_la_code, school_laestab, sex, free_school_meal_status, eal_status, mobility_status, attainment_area)
+
+  write.csv(
+    ks4_a8_ees %>%
+      filter(geographic_level == "School"),
+    "data/ees_tidy/cscp_ks4_attainment8_202223.csv",
+    row.names = FALSE
+  )
+  
+  ks4_a8_meta_data <- data.frame(col_name = names(ks4_a8_ees)) %>%
+    filter(
+      !(col_name %in% c("time_period", "time_identifier", "geographic_level", 
+                        "country_code", "country_name", 
+                        "old_la_code", "new_la_code", "la_name", 
+                        "school_laestab", "school_urn", "school_name"))) %>%
+    mutate(
+      col_type = "Filter",
+      label = stringr::str_to_sentence(gsub("_", " ", col_name)),
+      indicator_grouping = "",
+      indicator_unit = "",
+      indicator_dp = "",
+      filter_hint = "",
+      filter_grouping_column = ""
+    )
+  
+  ks4_a8_meta_data$col_type[7:8] <- "Indicator"
+  ks4_a8_meta_data$indicator_dp[7] <- "0"
+  ks4_a8_meta_data$indicator_dp[8] <- "2"
+  
+  print(ks4_a8_meta_data)
+  write.csv(ks4_a8_meta_data, "data/ees_tidy/cscp_ks4_attainment8_202223.meta.csv", row.names = FALSE)
+  
+    
+}
+
+
+
