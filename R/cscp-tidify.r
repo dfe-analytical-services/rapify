@@ -8,12 +8,20 @@ las <- readr::read_csv("https://raw.githubusercontent.com/dfe-analytical-service
   distinct()
 
 read_ks4_data <-  function(){
-  
  read_xlsx("data/cscp_raw/2022-2023_england_ks4_provisional.xlsx") %>%
   filter(!is.na(LEA)) %>%
   mutate(across(where(is.numeric), format, scientific = FALSE, trim = TRUE))
 }
 
+ks4_sex <- ks4_data_noinfo %>%
+  select(LEA, ESTAB, URN, TOTPUPS, NUMBOYS, NUMGIRLS) %>%
+  rename(Male = NUMBOYS, Female = NUMGIRLS, Total = TOTPUPS) %>%
+  pivot_longer(c(Total, Male, Female), names_to = "sex") %>%
+  mutate(pupil_count = if_else(is.na(value), "z", value)) %>%
+  select(-value)
+
+attainment_counts <- c("TPRIORLO", "TPRIORAV", "TPRIORHI")
+attainment_percents <- c("PTPRIORLO", "PTPRIORAV", "PTPRIORHI")
 
 tidy_progress8 <- function() {
   ks4_data <- read_ks4_data()
@@ -29,16 +37,6 @@ tidy_progress8 <- function() {
 
   ks4_data_noinfo <- ks4_data %>%
     select(-all_of(info_cols))
-
-  ks4_sex <- ks4_data_noinfo %>%
-    select(LEA, ESTAB, URN, TOTPUPS, NUMBOYS, NUMGIRLS) %>%
-    rename(Male = NUMBOYS, Female = NUMGIRLS, Total = TOTPUPS) %>%
-    pivot_longer(c(Total, Male, Female), names_to = "sex") %>%
-    mutate(pupil_count = if_else(is.na(value), "z", value)) %>%
-    select(-value)
-
-  attainment_counts <- c("TPRIORLO", "TPRIORAV", "TPRIORHI")
-  attainment_percents <- c("PTPRIORLO", "PTPRIORAV", "PTPRIORHI")
 
   p8_id_cols <- c("P8_HIDE_FLAG", "P8_BANDING", "P8_BANDING_FULL")
   p8cols <- names(ks4_data) %>%
@@ -213,3 +211,30 @@ tidy_progress8 <- function() {
   print(ks4_p8_meta_data)
   write.csv(ks4_p8_meta_data, "data/ees_tidy/cscp_ks4_progress8_202223.meta.csv", row.names = FALSE)
 }
+
+
+ks4_attainment8 <- function(){
+  ks4_data <- read_ks4_data()
+}
+
+library(dplyr)
+ks4_data <- read_ks4_data() %>% select(LEA, ESTAB, URN)
+
+create_laestab <- function(la_code, estab_code){
+  if_else(ESTAB=='NA', 'NA', paste0(la_code, estab_code))
+}
+
+ks4_data %>% mutate(
+  laestab = create_laestab("LAE", "ESTAB")
+)
+
+
+sw_time_in_service_2022 %>%
+  group_by(`Time in service`) %>%
+  summarise(
+    across(
+      prop_less_than_2_year_fte:prop_more_than_30_year, 
+      mean, na.rm = TRUE, 
+      .names = "mean_{.col}"
+      )
+    )
