@@ -75,3 +75,6 @@ clean_full_cycle_data <- function() {
     filter_grouping_column = c("country_pre_he", "country_post_he", "", "", "")
   ) %>% write.csv("data/ees_tidy/leo_provider_full_cycle_movement_ees.meta.csv", row.names = FALSE)
 }
+
+
+leo_outcomes_raw <- read_csv("data/leo_raw/data-leo-graduate-and-postgraduate-outcomes.csv")
