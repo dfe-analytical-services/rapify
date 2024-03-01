@@ -2,3 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
+data/cscp_raw/
+data/ees_tidy/
+data/leo_raw/
