@@ -14,20 +14,22 @@ clean_full_cycle_data <- function() {
       time_identifier = "Tax year",
       geographic_level = "Provider",
       country_pre_he = case_when(
-        home_region_name %in% c("Wales", "Scotland") ~ home_region_name,
+        home_region_name %in% c("Wales", "Scotland", "Northern Ireland") ~ home_region_name,
         .default = "England"
       ),
       region_pre_he = case_when(
         home_region_name == "Scotland" ~ "All Scottish regions",
+        home_region_name == "Northern Ireland" ~ "All Northern Irish regions",
         home_region_name == "Wales" ~ "All Welsh regions",
         .default = home_region_name
       ),
       country_post_he = case_when(
-        current_region %in% c("Wales", "Scotland") ~ current_region,
+        current_region %in% c("Wales", "Scotland", "Northern Ireland") ~ current_region,
         .default = "England"
       ),
       region_post_he = case_when(
         current_region == "Scotland" ~ "All Scottish regions",
+        current_region == "Northern Ireland" ~ "All Northern Irish regions",
         current_region == "Wales" ~ "All Welsh regions",
         .default = current_region
       ),
