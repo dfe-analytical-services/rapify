@@ -7,6 +7,12 @@ library(dplyr)
 # data_file <- "data/scap/school-capacity_200910-202122.csv"
 # gias_file <- 'data/gias_establishment_codes.csv'
 # urn_fix(data_file, gias_file = gias_file)
+# The function will write out three files:
+# 1. new data file with filled URNs and harmonised school names where possible (_clean.csv)
+# 2. QA table of LAEstabs, names and URNs from the original and replacements from GIAS
+# 3. Table of unmatched schools, where the matching hasn't managed to find an 
+#       appropriate match in GIAS. Might be some extra LA code changes to 
+#       account for here.
 
 urn_fix <- function(data_file, gias_file='data/gias_establishment_codes.csv'){
   data <- read_csv(data_file) %>%
