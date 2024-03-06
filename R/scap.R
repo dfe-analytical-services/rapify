@@ -46,15 +46,19 @@ urn_fix <- function(data_file, gias_file='data/gias_establishment_codes.csv'){
     la_code_new = c("942", "943", "838", "839", "839", "940", "941"),
     la_code_previous = c("909", "909", "835", "836", "837", "928", "928")
   )
+  message("Going through round 2 of matching using known LA code changes")
+  print(la_evolution)
   data_round2 <- update_rows_with_new_lacodes(
-    data_reprocessed, la_evolution
+    data_reprocessed, la_evolution, gias_clean
     )
   la_evolution_2 <- data.frame(
     la_code_new = c("839"),
     la_code_previous = c("835")
   )
+  message("Going through round 3 of matching using secondary LA code changes")
+  print(la_evolution_2)
   data_round3 <- update_rows_with_new_lacodes(
-    data_round2, la_evolution_2
+    data_round2, la_evolution_2, gias_clean
   )
 
   unmatched_rows_round3 <- data_round3 %>% 
@@ -80,8 +84,8 @@ urn_fix <- function(data_file, gias_file='data/gias_establishment_codes.csv'){
     select(all_of(names(data))) %>%
     mutate(school_urn = if_else(is.na(school_urn), "x", school_urn))
   write.csv(data_cleaned, gsub(".csv", "_cleaned.csv", data_file), row.names = FALSE)
-  
-  message(paste("About to write out", nrow(data), "rows to",output_file))
+  message("==========================================================================")
+  message("")  
 }
 
 
@@ -130,10 +134,11 @@ match_to_gias_data <- function (data, gias_clean){
       )
     )
   message(paste("I've got ", nrow(data_reprocessed), "rows in the reporocessed data (compared to ",nrow(data),"in the original data"))
+  message("=================================================================================")
   return(data_reprocessed)
 }
 
-update_rows_with_new_lacodes <- function(data, la_mapping){
+update_rows_with_new_lacodes <- function(data, la_mapping, gias_clean){
   unmatched_rows <- data %>% 
     filter(school_urn != URN | is.na(school_urn)| school_urn=='x') %>% 
     select(time_period, old_la_code, la_name, school_laestab, school_name) %>%
@@ -157,3 +162,8 @@ update_rows_with_new_lacodes <- function(data, la_mapping){
     changed_la_lookup
   )
 }
+
+
+data_file <- "data/scap/school-capacity_200910-202122.csv"
+gias_file <- 'data/gias_establishment_codes.csv'
+urn_fix(data_file, gias_file = gias_file)
