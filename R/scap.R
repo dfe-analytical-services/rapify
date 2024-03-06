@@ -1,10 +1,14 @@
 library(readr)
 library(dplyr)
 
-data_file <- "data/scap/school-capacity_200910-202122.csv"
-gias_file <- 'data/gias_establishment_codes.csv'
 
-urn_fix <- function(data_file, output_file, gias_file='data/gias_establishment_codes.csv'){
+# To run the fix, provide a data file and downloaded GIAS data
+# Example:
+# data_file <- "data/scap/school-capacity_200910-202122.csv"
+# gias_file <- 'data/gias_establishment_codes.csv'
+# urn_fix(data_file, gias_file = gias_file)
+
+urn_fix <- function(data_file, gias_file='data/gias_establishment_codes.csv'){
   data <- read_csv(data_file) %>%
     mutate(school_laestab = as.character(school_laestab))
   message(paste("Read in", nrow(data), "rows from",data_file))
@@ -31,40 +35,45 @@ urn_fix <- function(data_file, output_file, gias_file='data/gias_establishment_c
     select(URN, school_laestab, EstablishmentName, OpenDate, CloseDate)
   data_reprocessed <- match_to_gias_data(data, gias_clean)
   
-    unmatched_rows <- data_reprocessed %>% 
-    filter(school_urn != URN | is.na(school_urn)| school_urn=='x') %>% 
-    select(time_period, old_la_code, la_name, school_laestab, school_name) %>%
-    mutate(old_la_code = as.character(old_la_code))
-  message(paste("Found ", nrow(unmatched_rows), "unmatched rows in the reporocessed data"))
   
   la_evolution <- data.frame(
-    la_code_new = c("942", "943", "838", "839", "839", "839", "940", "941"),
-    la_code_previous = c("909", "909", "835", "835", "836", "837", "928", "928")
+    la_code_new = c("942", "943", "838", "839", "839", "940", "941"),
+    la_code_previous = c("909", "909", "835", "836", "837", "928", "928")
   )
-  changed_la_lookup <- unmatched_rows %>% 
-    select(-time_period) %>%
-    distinct() %>%
-    left_join(la_evolution, by=c("old_la_code"="la_code_previous")) %>% 
-    mutate(school_laestab_new = paste0(la_code_new, stringr::str_sub(school_laestab,4,7))) %>%
-    left_join(gias_clean, by=c("school_laestab_new"="school_laestab")) %>%
-    filter(!is.na(URN)) %>%
-    select(
-      URN, school_laestab, EstablishmentName, OpenDate, CloseDate
-    ) %>%
-    distinct() %>%
-    arrange(school_laestab)
-  data_round2 <- match_to_gias_data(
-    data_reprocessed %>%
-      select(-EstablishmentName, -URN), 
-    changed_la_lookup
+  data_round2 <- update_rows_with_new_lacodes(
+    data_reprocessed, la_evolution
     )
-  unmatched_rows_round2 <- data_round2 %>% 
+  la_evolution_2 <- data.frame(
+    la_code_new = c("839"),
+    la_code_previous = c("835")
+  )
+  data_round3 <- update_rows_with_new_lacodes(
+    data_round2, la_evolution_2
+  )
+
+  unmatched_rows_round3 <- data_round3 %>% 
     filter(school_urn != URN | is.na(school_urn)| school_urn=='x') %>% 
     select(time_period, old_la_code, la_name, school_laestab, school_name) %>%
     mutate(old_la_code = as.character(old_la_code)) %>%
     arrange(school_laestab)
-  message(paste("Found ", nrow(unmatched_rows_round2), "unmatched rows in the reporocessed data"))
+  message(paste("Found ", nrow(unmatched_rows_round3), "unmatched rows in the reporocessed data"))
+  write.csv(unmatched_rows_round3, gsub(".csv", "_unmatched.csv", data_file), row.names = FALSE)
   
+  name_matches <- data_round3 %>% 
+    select(time_period, old_la_code, la_name, school_laestab, school_urn, school_name) %>% 
+    distinct() %>% 
+    left_join(
+      data %>% 
+        select(time_period, school_laestab, original_name = school_name, original_urn = school_urn)
+      ) %>%
+    select(old_la_code, la_name, school_laestab, original_urn, school_urn, original_name, school_name) %>% distinct() %>% 
+    arrange( school_name, school_laestab, original_name)
+  write.csv(name_matches, gsub(".csv", "_gias_name_matching_qa.csv", data_file), row.names = FALSE)
+  
+  data_cleaned <- data_round3 %>% 
+    select(all_of(names(data))) %>%
+    mutate(school_urn = if_else(is.na(school_urn), "x", school_urn))
+  write.csv(data_cleaned, gsub(".csv", "_cleaned.csv", data_file), row.names = FALSE)
   
   message(paste("About to write out", nrow(data), "rows to",output_file))
 }
@@ -88,10 +97,14 @@ match_to_gias_data <- function (data, gias_clean){
       time_period_ref_date >= OpenDate,
     )
   message(paste("Found", nrow(school_time_period_lookup), " records in lookup table."))
-  print(school_time_period_lookup %>% filter(!is.na(URN), is.na(school_urn)))
   lookup_duplicates <- school_time_period_lookup %>% 
     summarise(count=n(), .by=c(time_period, school_laestab, school_urn) ) %>%
     filter(count>1) %>% arrange(school_laestab)
+  print(
+    lookup_duplicates %>% left_join(school_time_period_lookup) %>% 
+      select(-time_period, -time_period_ref_date) %>% distinct() %>% 
+      arrange(school_laestab), 
+    n=50)
   message(paste("Found", nrow(lookup_duplicates), " duplicates in lookup table."))
   
   message("Now rejoining this on to original data to add back in unmacthed rows")
@@ -112,4 +125,29 @@ match_to_gias_data <- function (data, gias_clean){
     )
   message(paste("I've got ", nrow(data_reprocessed), "rows in the reporocessed data (compared to ",nrow(data),"in the original data"))
   return(data_reprocessed)
+}
+
+update_rows_with_new_lacodes <- function(data, la_mapping){
+  unmatched_rows <- data %>% 
+    filter(school_urn != URN | is.na(school_urn)| school_urn=='x') %>% 
+    select(time_period, old_la_code, la_name, school_laestab, school_name) %>%
+    mutate(old_la_code = as.character(old_la_code))
+  message(paste("Found ", nrow(unmatched_rows), "unmatched rows in the reporocessed data"))
+  changed_la_lookup <- unmatched_rows %>% 
+    select(-time_period) %>%
+    distinct() %>%
+    left_join(la_mapping, by=c("old_la_code"="la_code_previous")) %>% 
+    mutate(school_laestab_new = paste0(la_code_new, stringr::str_sub(school_laestab,4,7))) %>%
+    left_join(gias_clean, by=c("school_laestab_new"="school_laestab")) %>%
+    filter(!is.na(URN)) %>%
+    select(
+      URN, school_laestab, EstablishmentName, OpenDate, CloseDate
+    ) %>%
+    distinct() %>%
+    arrange(school_laestab)
+  data_processed <- match_to_gias_data(
+    data %>%
+      select(-EstablishmentName, -URN), 
+    changed_la_lookup
+  )
 }
