@@ -85,6 +85,20 @@ urn_fix <- function(data_file, gias_file='data/gias_establishment_codes.csv'){
     mutate(school_urn = if_else(is.na(school_urn), "x", school_urn))
   write.csv(data_cleaned, gsub(".csv", "_cleaned.csv", data_file), row.names = FALSE)
   message("==========================================================================")
+  # Round 4!
+  data_round4 <- data_round3 %>% 
+    select(all_of(names(data))) %>%
+    mutate(school_urn = if_else(is.na(school_urn), "x", school_urn)) %>%
+    left_join(
+    name_matches %>% select(school_laestab, school_urn) %>% 
+    distinct() %>% 
+    filter(!is.na(school_urn)) %>% 
+    left_join(gias_clean %>% rename(school_laestab_gias=school_laestab), by=c("school_urn"="URN")) %>% 
+    mutate(gias_urn=school_urn, school_urn='x'),
+    by=c("school_urn"="school_urn", "school_laestab"="school_laestab")
+  )  
+  
+  
   message("")  
 }
 
