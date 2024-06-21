@@ -1,3 +1,5 @@
+library(dplyr)
+library(tidyr)
 pivot_filter_indicator <- function(df, filter_name = "grade",
                                    keep_filters = c(
                                      "time_period", "time_identifier", "version",
@@ -7,7 +9,7 @@ pivot_filter_indicator <- function(df, filter_name = "grade",
                                    )) {
   dftidied <- df %>% pivot_longer(!any_of(c(keep_filters)),
     names_to = c(".value", filter_name),
-    names_pattern = "(.*)_(.*)"
+    names_pattern = "(.*)[^_](.*)"
   )
   return(dftidied)
 }
