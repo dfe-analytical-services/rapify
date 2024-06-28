@@ -1,4 +1,11 @@
-col_name,col_type,label,indicator_grouping,indicator_unit,indicator_dp,filter_hint,filter_grouping_column
-total_ects_count_provider-led,Indicator,Total number of ECTs starting provider-led ECF-based induction,,,0,,
-total_mentors_count_provider-led,Indicator,Total number of mentors trained for provider-led ECF-based induction,,,,,
-phase_of_education,Filter,Phase of education of the school,,,,,
+﻿col_name,col_type,label,indicator_grouping,indicator_unit,indicator_dp,filter_hint,filter_grouping_column
+group_name,Filter,Group Name,,,,,breakdown
+total_ects_count_provider_led,Indicator,Total number of ECTs who started provider-led ECF-based induction,,,0,,
+total_mentors_trained_count_provider_led,Indicator,Total number of mentors trained for provider-led ECF-based induction,,,0,,
+percent_swfc_ects_pending_confirmation_provider_led,Indicator,Percentage of ECTs who started provider-led ECF-based induction - Pending confirmation,,%,1,,
+percent_swfc_ects_provider_led,Indicator,Percentage of ECTs who started provider-led ECF-based induction,,%,1,,
+percent_swfc_ects_school_led,Indicator,Percentage of ECTs who started school-led ECF-based induction,,%,1,,
+count_swfc_ects,Indicator,Number of ECTs in SWC,,,0,,
+count_swfc_ects_pending_confirmation_provider_led,Indicator,Number of ECTs in SWC who started provider-led ECF-based induction - Pending confirmation,,,0,,
+count_swfc_ects_provider_led,Indicator,Number of ECTs in SWC who started provider-led ECF-based induction,,,0,,
+count_swfc_ects_school_led,Indicator,Number of ECTs in SWC who started school-led ECF-based induction,,,0,,
