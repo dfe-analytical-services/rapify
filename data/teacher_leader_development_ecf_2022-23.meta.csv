@@ -1,0 +1,4 @@
+col_name,col_type,label,indicator_grouping,indicator_unit,indicator_dp,filter_hint,filter_grouping_column
+total_ects_count_provider-led,Indicator,Total number of ECTs starting provider-led ECF-based induction,,,0,,
+total_mentors_count_provider-led,Indicator,Total number of mentors trained for provider-led ECF-based induction,,,,,
+phase_of_education,Filter,Phase of education of the school,,,,,
