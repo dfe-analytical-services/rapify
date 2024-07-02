@@ -13,3 +13,9 @@ pivot_filter_indicator <- function(df, filter_name = "grade",
   )
   return(dftidied)
 }
+# The pivot longer function- it transforms data from a wide format to a long format
+# is a function of the (tidyr) package, which is part of the tidyverse collection of packages
+# in a wide format data is spread across multiple columns with different variables,
+# in a long format data is gathered into key-value pairs which makes it easier.
+# the syntax : pivot_longer (data,cols, names_to = "name", values_to = "value")
+# this enables more flexible, data manipulation and analysis

@@ -14,7 +14,7 @@ tidydata <-pivot_filter_indicator(teacher_leader_development_ecf_2022_23 ,
 # Functions used
 # mutate() - creates or changes a column
 # case_when() - change an entry in a cell based on a set of criteria
-# grepl() - return true if a sub-string is found in a string
+# grepl() - return true if a sub-string is found in a string- used to search for patterns within strings and determine if a particular pattern exists.
 # %>% - pipe (send output from one function as input for the next)
 cleaned <- tidydata %>% mutate(
 dummy_column = 23846 ,
@@ -29,12 +29,13 @@ dummy_column = 23846 ,
   ),
   school_provider_led = case_when(
     grepl("provider_led", type_ects_training) ~ "Provider led",
-    grepl("Total", type_ects_training) ~ "School led",
-    .default = 'Total'  )
+    grepl("school_led", type_ects_training) ~ "School led",
+    .default = 'Total'  ) , teacher_count = if_else(is.na(total),count,total)
 ) 
 View(cleaned)
 
 
+install.packages ("dplyr")
 
 
 View(tidydata)
