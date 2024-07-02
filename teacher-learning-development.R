@@ -29,11 +29,9 @@ dummy_column = 23846 ,
   ),
   school_provider_led = case_when(
     grepl("provider_led", type_ects_training) ~ "Provider led",
-    .default = 'Total',
     grepl("Total", type_ects_training) ~ "School led",
-    .default = 'Total'
-  )
-)
+    .default = 'Total'  )
+) 
 View(cleaned)
 
 
@@ -45,3 +43,4 @@ print(tidydata$type_ects_training %>% unique())
 # Read in meta file
 ecf_meta <- read_csv("data/teacher_leader_development_ecf_2022-23.meta.csv")
 View(ecf_meta)
+library(dplyr)
