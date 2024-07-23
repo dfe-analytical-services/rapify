@@ -54,20 +54,36 @@ tidy_progress8 <- function() {
       metric = case_when(
         grepl("CILOW", master_filter) ~ "attainment_score_lower_confidence",
         grepl("CIUP", master_filter) ~ "attainment_score_upper_confidence",
-        grepl("P8MEA", master_filter) ~ "attainment_score",
-        grepl("P8PUP", master_filter) ~ "pupil_count",
-        grepl("TP8ADJ", master_filter) ~ "pupil_count_progress8_adjustment",
+        grepl("P8MEA", master_filter) ~ "attainment_score_average",
+        grepl("P8PUP", master_filter) ~ "attainment_score_total",
+        grepl("TP8ADJ", master_filter) ~ "attainment_score_adjusted",
         grepl("HIDE_FLAG", master_filter) ~ "hide_flag",
         .default = "dunno_yet"
       ),
-      sex = case_when(
-        grepl("BOYS", master_filter) ~ "Male",
-        grepl("GIRLS", master_filter) ~ "Female",
+      breakdown_topic = case_when(
+        grepl("BOYS", master_filter) ~ "Sex",
+        grepl("GIRLS", master_filter) ~ "Sex",
+        grepl("_NFSM", master_filter) ~ "Free school meals status",
+        grepl("_FSM", master_filter) ~ "Free school meals status",
+        grepl("NMOB", master_filter) ~ "Mobility status",
+        grepl("EAL", master_filter) ~ "Language status",
+        grepl("_LO", master_filter) ~ "Prior attainment",
+        grepl("_MID", master_filter) ~ "Prior attainment",
+        grepl("_HI", master_filter) ~ "Prior attainment",
+        grepl("DIFFN", master_filter) ~ "Prior attainment",
         .default = "All pupils"
       ),
-      free_school_meal_status = case_when(
+      breakdown = case_when(
+        grepl("BOYS", master_filter) ~ "Male",
+        grepl("GIRLS", master_filter) ~ "Female",
         grepl("_NFSM", master_filter) ~ "Not free school meals",
         grepl("_FSM", master_filter) ~ "Free school meals",
+        grepl("NMOB", master_filter) ~ "Non-mobile",
+        grepl("EAL", master_filter) ~ "English as another language",
+        grepl("_LO", master_filter) ~ "Low",
+        grepl("_MID", master_filter) ~ "Mid",
+        grepl("_HI", master_filter) ~ "High",
+        grepl("DIFFN", master_filter) ~ "Difference between High and Low",
         .default = "All pupils"
       ),
       time_period = case_when(
@@ -75,21 +91,12 @@ tidy_progress8 <- function() {
         grepl("_21", master_filter) ~ "202021",
         .default = "202223"
       ),
-      mobility_status = case_when(
-        grepl("NMOB", master_filter) ~ "Non-mobile",
-        .default = "All pupils"
-      ),
-      eal_status = case_when(
-        grepl("EAL", master_filter) ~ "English as another language",
-        .default = "All pupils"
-      ),
       attainment_area = case_when(
         grepl("MEAENG", master_filter) ~ "English",
         grepl("MEAMAT", master_filter) ~ "Maths",
         grepl("MEAEBAC", master_filter) ~ "EBACC pupils",
         grepl("MEAOPEN", master_filter) ~ "Open",
-        grepl("MEACOV", master_filter) ~ "Cov - no idea what this is",
-        grepl("DIFFN_P8MEA", master_filter) ~ "diffn_p8_measure",
+        grepl("MEACOV", master_filter) ~ "Coverage corrected",
         .default = "All subjects"
       ),
       prior_attainment = case_when(
@@ -169,22 +176,19 @@ tidy_progress8 <- function() {
       school_urn,
       school_name,
       version,
-      sex,
-      free_school_meal_status,
-      eal_status,
-      mobility_status,
-      prior_attainment,
-      attainment_area,
+breakdown_topic,
+breakdown,
+attainment_area,
       progree8_hide_flag = P8_HIDE_FLAG,
       progree8_banding = P8_BANDING,
       progree8_banding_full = P8_BANDING_FULL,
-      pupil_count,
-      pupil_count_progress8_adjustment,
-      attainment_score,
-      attainment_score_lower_confidence,
+attainment_score_average,
+attainment_score_total,
+attainment_score_adjusted,
+attainment_score_lower_confidence,
       attainment_score_upper_confidence
     ) %>%
-    arrange(-as.numeric(time_period), old_la_code, school_laestab, version, sex, free_school_meal_status, eal_status, mobility_status, attainment_area)
+    arrange(-as.numeric(time_period), old_la_code, school_laestab, version, breakdown_topic, breakdown, attainment_area)
 
   write.csv(
     ks4_p8_ees %>%
@@ -194,7 +198,11 @@ tidy_progress8 <- function() {
   )
 
   ks4_p8_meta_data <- data.frame(col_name = names(ks4_p8_ees)) %>%
-    filter(!(col_name %in% c("time_period", "time_identifier", "geographic_level", "country_code", "country_name", "old_la_code", "new_la_code", "la_name", "school_laestab", "school_urn", "school_name"))) %>%
+    filter(
+      !(col_name %in% c("time_period", "time_identifier", "geographic_level", 
+                        "country_code", "country_name", "old_la_code", 
+                        "new_la_code", "la_name", "school_laestab", 
+                        "school_urn", "school_name"))) %>%
     mutate(
       col_type = "Filter",
       label = stringr::str_to_sentence(gsub("_", " ", col_name)),
@@ -205,10 +213,10 @@ tidy_progress8 <- function() {
       filter_grouping_column = ""
     )
 
-  ks4_p8_meta_data$col_type[8:15] <- "Indicator"
-  ks4_p8_meta_data$indicator_dp[11:12] <- "0"
-  ks4_p8_meta_data$indicator_dp[13:15] <- "2"
-
+  ks4_p8_meta_data$col_type[5:12] <- "Indicator"
+  ks4_p8_meta_data$indicator_dp[8:12] <- "2"
+  ks4_p8_meta_data$indicator_dp[9] <- "1"
+  
   print(ks4_p8_meta_data)
   write.csv(ks4_p8_meta_data, paste0(data_folder, "cscp_ks4_progress8_202223.meta.csv"), row.names = FALSE)
 }
