@@ -2,23 +2,22 @@ library(readxl)
 library(dplyr)
 library(tidyr)
 
-las <- readr::read_csv("https://raw.githubusercontent.com/dfe-analytical-services/dfe-published-data-qa/master/data/las.csv") %>%
+las <- readr::read_csv(
+  "https://raw.githubusercontent.com/dfe-analytical-services/dfe-published-data-qa/master/data/las.csv"
+  ) %>%
   filter(status == "live" | old_la_code == "909") %>%
   select(new_la_code, la_name, old_la_code) %>%
   distinct()
 
+home_folder <- Sys.getenv("HOME") %>% gsub("Documents","", .)
+
+data_folder <- paste0(home_folder, "test-data/api-cscp/ks4/")
+
 read_ks4_data <-  function(){
- read_xlsx("data/cscp_raw/2022-2023_england_ks4_provisional.xlsx") %>%
+ read_xlsx(paste0(data_folder, "2022-2023_england_ks4_provisional.xlsx")) %>%
   filter(!is.na(LEA)) %>%
   mutate(across(where(is.numeric), format, scientific = FALSE, trim = TRUE))
 }
-
-ks4_sex <- ks4_data_noinfo %>%
-  select(LEA, ESTAB, URN, TOTPUPS, NUMBOYS, NUMGIRLS) %>%
-  rename(Male = NUMBOYS, Female = NUMGIRLS, Total = TOTPUPS) %>%
-  pivot_longer(c(Total, Male, Female), names_to = "sex") %>%
-  mutate(pupil_count = if_else(is.na(value), "z", value)) %>%
-  select(-value)
 
 attainment_counts <- c("TPRIORLO", "TPRIORAV", "TPRIORHI")
 attainment_percents <- c("PTPRIORLO", "PTPRIORAV", "PTPRIORHI")
@@ -30,7 +29,7 @@ info_cols <- c(
   "FEEDER", "TABKS2", "TAB1618", "AGERANGE"
 )
 
-school_info <- ks4_data %>% select(all_of(c("LEA", "ESTAB", "URN", "SCHNAME", info_cols)))
+p8_id_cols <- c("P8_HIDE_FLAG", "P8_BANDING", "P8_BANDING_FULL")
 
 
 tidy_progress8 <- function() {
@@ -39,7 +38,6 @@ tidy_progress8 <- function() {
   ks4_data_noinfo <- ks4_data %>%
     select(-all_of(info_cols))
 
-  p8_id_cols <- c("P8_HIDE_FLAG", "P8_BANDING", "P8_BANDING_FULL")
   p8cols <- names(ks4_data) %>%
     as.data.frame() %>%
     filter(grepl("P8", .), !(. %in% p8_id_cols)) %>%
@@ -48,14 +46,17 @@ tidy_progress8 <- function() {
 
   ks4_p8 <- ks4_data_noinfo %>%
     select(all_of(c("LEA", "ESTAB", "URN", "SCHNAME", p8_id_cols, p8cols))) %>%
-    pivot_longer(-all_of(c("LEA", "ESTAB", "URN", "SCHNAME", p8_id_cols)), names_to = "master_filter") %>%
+    pivot_longer(
+      -all_of(c("LEA", "ESTAB", "URN", "SCHNAME", p8_id_cols)), 
+      names_to = "master_filter"
+      ) %>%
     mutate(
       metric = case_when(
         grepl("CILOW", master_filter) ~ "attainment_score_lower_confidence",
         grepl("CIUP", master_filter) ~ "attainment_score_upper_confidence",
         grepl("P8MEA", master_filter) ~ "attainment_score",
         grepl("P8PUP", master_filter) ~ "pupil_count",
-        grepl("TP8ADJ", master_filter) ~ "some_weird_adjustment_number",
+        grepl("TP8ADJ", master_filter) ~ "pupil_count_progress8_adjustment",
         grepl("HIDE_FLAG", master_filter) ~ "hide_flag",
         .default = "dunno_yet"
       ),
@@ -88,7 +89,7 @@ tidy_progress8 <- function() {
         grepl("MEAEBAC", master_filter) ~ "EBACC pupils",
         grepl("MEAOPEN", master_filter) ~ "Open",
         grepl("MEACOV", master_filter) ~ "Cov - no idea what this is",
-        grepl("DIFFN_P8MEA", master_filter) ~ "Suspect this belongs somewhere else, but don't know what it is so leaving it here for now",
+        grepl("DIFFN_P8MEA", master_filter) ~ "diffn_p8_measure",
         .default = "All subjects"
       ),
       prior_attainment = case_when(
@@ -178,7 +179,7 @@ tidy_progress8 <- function() {
       progree8_banding = P8_BANDING,
       progree8_banding_full = P8_BANDING_FULL,
       pupil_count,
-      some_weird_adjustment_number,
+      pupil_count_progress8_adjustment,
       attainment_score,
       attainment_score_lower_confidence,
       attainment_score_upper_confidence
@@ -188,7 +189,7 @@ tidy_progress8 <- function() {
   write.csv(
     ks4_p8_ees %>%
       filter(geographic_level == "School"),
-    "data/ees_tidy/cscp_ks4_progress8_202223.csv",
+    paste0(data_folder, "cscp_ks4_progress8_202223.csv"),
     row.names = FALSE
   )
 
@@ -209,7 +210,7 @@ tidy_progress8 <- function() {
   ks4_p8_meta_data$indicator_dp[13:15] <- "2"
 
   print(ks4_p8_meta_data)
-  write.csv(ks4_p8_meta_data, "data/ees_tidy/cscp_ks4_progress8_202223.meta.csv", row.names = FALSE)
+  write.csv(ks4_p8_meta_data, paste0(data_folder, "cscp_ks4_progress8_202223.meta.csv"), row.names = FALSE)
 }
 
 
@@ -230,7 +231,8 @@ ks4_attainment8 <- function(){
       metric = case_when(
         grepl("ATT8SCR", master_filter) ~ "attainment_score",
         grepl("TOTATT8", master_filter) ~ "pupil_count",
-        .default = "dunno_yet"
+        grepl("DIFFN", master_filter) ~ "diffn",
+        .default = "unknown"
       ),
       sex = case_when(
         grepl("BOYS", master_filter) ~ "Male",
@@ -262,7 +264,6 @@ ks4_attainment8 <- function(){
         grepl("ENG", master_filter) ~ "English",
         grepl("MAT", master_filter) ~ "Maths",
         grepl("EBAC", master_filter) ~ "EBACC pupils",
-        grepl("DIFFN_ATT8", master_filter) ~ "Suspect this belongs somewhere else, but don't know what it is so leaving it here for now",
         .default = "All subjects"
       ),
       prior_attainment = case_when(
@@ -303,7 +304,7 @@ ks4_attainment8 <- function(){
   
   ks4_a8_ees <- ks4_a8_tidied %>%
     mutate(
-      across(c("pupil_count", "attainment_score"), ~  if_else(is.na(.), 'x', .)),
+      across(c("pupil_count", "attainment_score", "diffn"), ~  if_else(is.na(.), 'z', .)),
       school_laestab = case_when(
         is.na(ESTAB) ~ "",
         ESTAB == "NA" ~ "",
@@ -348,13 +349,14 @@ ks4_attainment8 <- function(){
       attainment_area,
       pupil_count,
       attainment_score,
+      diffn
     ) %>%
     arrange(-as.numeric(time_period), old_la_code, school_laestab, sex, free_school_meal_status, eal_status, mobility_status, attainment_area)
 
   write.csv(
     ks4_a8_ees %>%
       filter(geographic_level == "School"),
-    "data/ees_tidy/cscp_ks4_attainment8_202223.csv",
+    paste0(data_folder, "cscp_ks4_attainment8_202223.csv"),
     row.names = FALSE
   )
   
@@ -379,7 +381,7 @@ ks4_attainment8 <- function(){
   ks4_a8_meta_data$indicator_dp[8] <- "2"
   
   print(ks4_a8_meta_data)
-  write.csv(ks4_a8_meta_data, "data/ees_tidy/cscp_ks4_attainment8_202223.meta.csv", row.names = FALSE)
+  write.csv(ks4_a8_meta_data, paste0(data_folder, "cscp_ks4_attainment8_202223.meta.csv"), row.names = FALSE)
   
     
 }
