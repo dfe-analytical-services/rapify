@@ -9,7 +9,7 @@ home_dir <- Sys.getenv("HOME") |> strsplit("\\\\")
 data_folder <- paste0(paste0(home_dir[[1]][1:3], collapse = "/"), "/test-data/api-attendance/")
 
 primary_filters <- c(
-  "time_period", "time_identifier", "geographic_level",
+  "time_period", "time_identifier", "time_frame", "geographic_level",
   "country_code", "country_name",
   "region_code", "region_name",
   "new_la_code", "la_name", "old_la_code",
@@ -23,14 +23,20 @@ read_attendance <- function() {
   if (!file.exists(paste0(data_folder, data_file))) {
     message(paste0(data_folder, data_file, "\n not found. Downloading from repository."))
     att_wide <- read_csv(url) %>%
-      rename(establishment_phase = school_type) %>%
+      rename(
+        time_frame = breakdown,
+        establishment_phase = school_type
+        ) %>%
       mutate(time_identifier = paste("Week", time_identifier))
     att_wide |> write_csv(paste0(data_folder, data_file))
   } else {
     message(paste0(data_folder, data_file, " found. Readng in from file
                    ."))
     att_wide <- read_csv(paste0(data_folder, data_file)) %>%
-      rename(establishment_phase = school_type) %>%
+      rename(
+        time_frame = breakdown,
+        establishment_phase = school_type
+        ) %>%
       mutate(time_identifier = paste("Week", time_identifier))
   }
   att_wide
@@ -51,12 +57,13 @@ create_reasons_tidy <- function() {
     ) %>%
     mutate(
       reason = str_to_sentence(reason %>% gsub("_", " ", .)),
-      reason = gsub("aea", "AEA", reason)
+      reason = gsub("aea", "AEA", reason),
+      across(region_code:old_la_code, ~ if_else(is.na(.), "", as.character(.)))
     ) %>%
     select(all_of(c(primary_filters, "reason", "pupil_count")))
   write_csv(reason_tidy, paste0(data_folder, "attendance_reasons.csv"))
   reason_meta <- meta_template(reason_tidy) %>% 
-    filter(col_name != "attendance_date")
+    filter(!(col_name %in% c("attendance_date", "week_commencing")))
   write_csv(reason_meta, paste0(data_folder, "attendance_reasons.meta.csv"))
   reason_tidy
 }
