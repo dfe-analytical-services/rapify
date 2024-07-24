@@ -23,13 +23,15 @@ read_attendance <- function() {
   if (!file.exists(paste0(data_folder, data_file))) {
     message(paste0(data_folder, data_file, "\n not found. Downloading from repository."))
     att_wide <- read_csv(url) %>%
-      rename(establishment_phase = school_type)
+      rename(establishment_phase = school_type) %>%
+      mutate(time_identifier = paste("Week", time_identifier))
     att_wide |> write_csv(paste0(data_folder, data_file))
   } else {
     message(paste0(data_folder, data_file, " found. Readng in from file
                    ."))
     att_wide <- read_csv(paste0(data_folder, data_file)) %>%
-      rename(establishment_phase = school_type)
+      rename(establishment_phase = school_type) %>%
+      mutate(time_identifier = paste("Week", time_identifier))
   }
   att_wide
 }
