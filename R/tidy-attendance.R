@@ -109,9 +109,13 @@ read_api_reasons <- function(parse = TRUE){
   url <- 'https://dev.statistics.api.education.gov.uk/api/v1.0/data-sets/53e59001-f5b5-9370-8527-8b7ff006b114/query'
   body <- '{
   "criteria": {
+      "and": [
+  {
         "geographicLevels": {
           "eq": "NAT"
+        }
         },
+  {
 "timePeriods": {
   "in": [
     {
@@ -120,6 +124,18 @@ read_api_reasons <- function(parse = TRUE){
     }
   ]
 }
+},
+      {
+        "filters": {
+          "eq": "9ZW4v"
+        }
+      },
+      {
+        "filters": {
+          "eq": "m8R9K"
+        }
+      }
+    ]
 },
   "indicators": [
     "pupil_count"
