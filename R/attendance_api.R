@@ -1,3 +1,14 @@
+library(readr)
+library(curl)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(httr)
+library(xml2)
+library(jsonlite)
+
+source("R/ees-functions.R")
+
 check_api_reasons <- function() {
   url <- "https://dev.statistics.api.education.gov.uk/api/v1.0/data-sets/53e59001-f5b5-9370-8527-8b7ff006b114"
   response <- httr::GET(url)
