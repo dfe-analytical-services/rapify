@@ -24,8 +24,9 @@ meta_template <- function(data) {
     )
 }
 
-
-convert_api_output <- function(api_output){
+# Running this with brute long code for now so I understand what's going on. 
+# Update to something cleverer / jsonlite at some point.
+parse_ees_api_output <- function(api_output){
   results <- api_output$results
 dfnames <- c(
   "time_period", "time_identifier", "geographic_level",
@@ -42,15 +43,15 @@ for(i in 1:length(results)){
   df[i,"geographic_level"] <- results[[i]]$geographicLevel
   for(j in 1:length(results[[i]]$locations)){
     loc_name <- names(results[[i]]$locations[j])
-    df[i,loc_name] <- results[[i]]$locations[[loc_name]]
+    df[i,loc_name] <-  gsub( ".*: ", "", results[[i]]$locations[[loc_name]])
   }
   for(j in 1:length(results[[i]]$filters)){
     filter_name <- names(results[[i]]$filters[j])
-    df[i,filter_name] <- results[[i]]$filters[[filter_name]]
+    df[i,filter_name] <-  gsub( ".*: ", "", results[[i]]$filters[[filter_name]])
   }
   for(j in 1:length(results[[i]]$values)){
     value_name <- names(results[[i]]$values[j])
-    df[i,value_name] <- results[[i]]$values[[value_name]]
+    df[i,value_name] <-  gsub( ".*: ", "", results[[i]]$values[[value_name]])
   }
 }
 df
