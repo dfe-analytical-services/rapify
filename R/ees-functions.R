@@ -1,3 +1,4 @@
+# Create a draft meta data frame based on a given data set
 meta_template <- function(data) {
   standard_indicators <- c("pupil_count", "pupil_fte", "pupil_percent")
   base_filters <- c(
@@ -25,6 +26,8 @@ meta_template <- function(data) {
     )
 }
 
+
+# Parse the meta filters from an EES API meta query
 parse_ees_api_meta_filters <- function(api_meta) {
   output <- api_meta %>%
     content("text") %>%
@@ -48,6 +51,8 @@ parse_ees_api_meta_filters <- function(api_meta) {
     left_join(filter_item_lookup)
 }
 
+# Look up a given filter item from a filter table derived from API gathered 
+# meta data using parse_ees_api_meta_filters()
 get_filter_item_id <- function(colname, item, filter_meta) {
   filter_meta %>%
     filter(
@@ -57,9 +62,12 @@ get_filter_item_id <- function(colname, item, filter_meta) {
     pull(item_id)
 }
 
+# Generate an API query entry given a specified column name and item and a 
+# filter table derived from API gathered meta data using 
+# parse_ees_api_meta_filters() 
 filter_query <- function(colname, item, filter_meta) {
   if (length(item) == 1) {
-    geography_query <- paste0(
+    query <- paste0(
       '  {
         "filters": {
           "eq": "',
@@ -69,7 +77,7 @@ filter_query <- function(colname, item, filter_meta) {
       }'
     )
   } else {
-    geography_query <- paste0(
+    query <- paste0(
       '  {
         "filters": {
           "in": ["',
@@ -79,10 +87,12 @@ filter_query <- function(colname, item, filter_meta) {
       }'
     )
   }
+  query
 }
 
 # Running this with brute long code for now so I understand what's going on.
-# Update to something cleverer / jsonlite at some point.
+# Updating this to jsonlite as done with the meta parsing above should save a 
+# few lines of code.
 parse_ees_api_query <- function(api_output, clear_codes = TRUE) {
   results <- api_output$results
   dfnames <- c(
@@ -122,7 +132,7 @@ parse_ees_api_query <- function(api_output, clear_codes = TRUE) {
   df
 }
 
-
+# Generate an API query entry for a given geographic level 
 geography_query <- function(query_geographic_level) {
   api_geography_lookup <- data.frame(
     geographic_level = c("National"),
