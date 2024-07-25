@@ -24,9 +24,30 @@ meta_template <- function(data) {
     )
 }
 
+parse_ees_api_meta_filters <- function(api_meta){
+  output <- api_meta %>% content("text") %>% jsonlite::fromJSON()
+  nfilters <- length(output$filters$id)
+  filter_table <- data.frame(
+    row = 1:nfilters,
+    id = output$filters$id,
+    label = output$filters$label
+    )
+  filter_item_lookup <- data.frame(row=NA, item_id=NA, item_label=NA)
+  for(i in 1:nfilters){
+    filter_item_lookup <- filter_item_lookup %>% 
+      rbind(
+        output$filters$options[[i]] %>% 
+          select(item_id = id,item_label = label) %>%
+          mutate(row = i)
+    )
+  }
+  filter_table %>%
+    left_join(filter_item_lookup)
+}
+
 # Running this with brute long code for now so I understand what's going on. 
 # Update to something cleverer / jsonlite at some point.
-parse_ees_api_output <- function(api_output, clear_codes = TRUE){
+parse_ees_api_query <- function(api_output, clear_codes = TRUE){
   results <- api_output$results
 dfnames <- c(
   "time_period", "time_identifier", "geographic_level",

@@ -113,12 +113,25 @@ read_api_reasons <- function(
     area_name = "England",
     dataset_id = "53e59001-f5b5-9370-8527-8b7ff006b114"
     ){
+  
+  # Get the data-set meta data
+  meta_response <- httr::GET(paste0(
+    "https://dev.statistics.api.education.gov.uk/api/v1.0/data-sets/",
+    dataset_id,
+    "/meta"
+  ))
+  filters <- parse_ees_api_meta_filters(meta_response)
+  
   # Define the query url
   url <- paste0(
     "https://dev.statistics.api.education.gov.uk/api/v1.0/data-sets/",
     dataset_id,
     "/query"
     )
+  
+  if(time_frame == 'Latest week'){
+    time_code <- as.numeric(paste0())
+  }
   
   # Create the query
   body <- paste0(
