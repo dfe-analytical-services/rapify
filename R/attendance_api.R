@@ -93,7 +93,7 @@ read_api_reasons <- function(
   )
   output <- content(response)
   if (parse) {
-    output <- parse_ees_api_output(output)
+    output <- parse_ees_api_query(output)
   }
   output
 }

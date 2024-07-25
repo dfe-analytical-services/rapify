@@ -24,7 +24,7 @@
         }
       }
     ]
-},
+  },
   "indicators": [
     "pupil_count"
   ],
