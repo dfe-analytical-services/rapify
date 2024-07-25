@@ -3,6 +3,9 @@ library(curl)
 library(dplyr)
 library(tidyr)
 library(stringr)
+library(httr)
+library(xml2)
+library(jsonlite)
 
 source("R/ees-functions.R")
 
@@ -30,7 +33,10 @@ initial_clean <- function(attendance_data){
       time_frame = gsub("YTD", "Year to date", time_frame),
       day_number = if_else(time_frame == "Weekly", "Total", as.character(day_number))
     ) %>%
-    rename_all( ~ stringr::str_replace_all(., 'auth_', 'authorised_'))
+    rename_all(
+      starts_with("reason_" ~ paste0(., "_count"))
+      ~ stringr::str_replace_all(., 'auth_', 'authorised_')
+      )
   time_lookup <- attendance_cleaned %>% 
     select(attendance_date, time_period, time_identifier, week_commencing) %>% 
     distinct() %>% 
@@ -91,3 +97,36 @@ create_reasons_tidy <- function() {
   write_csv(reason_meta, paste0(data_folder, "attendance_reasons.meta.csv"))
   reason_tidy
 }
+
+check_api_reasons <- function(){
+  url <- 'https://dev.statistics.api.education.gov.uk/api/v1.0/data-sets/53e59001-f5b5-9370-8527-8b7ff006b114'
+  response <- httr::GET(url)
+  content(response) 
+}
+
+
+read_api_reasons <- function(){
+  url <- 'https://dev.statistics.api.education.gov.uk/api/v1.0/data-sets/53e59001-f5b5-9370-8527-8b7ff006b114/query'
+  body <- '{
+  "criteria": {
+        "geographicLevels": {
+          "eq": "NAT"
+        }
+        },
+  "indicators": [
+    "pupil_count"
+  ],
+  "debug": true,
+  "page": 1,
+  "pageSize": 1000
+}'
+  
+  response <- httr::POST(
+    url,
+    body=body, 
+    encode='json',
+    content_type("application/json")
+  )
+  content(response) 
+}
+

@@ -23,3 +23,35 @@ meta_template <- function(data) {
       filter_grouping_column = ""
     )
 }
+
+
+convert_api_output <- function(api_output){
+  results <- api_output$results
+dfnames <- c(
+  "time_period", "time_identifier", "geographic_level",
+  names(results[[1]]$locations),
+  names(results[[1]]$filters),
+  names(results[[1]]$values)
+  )
+df = data.frame(matrix(vector(), 0, length(dfnames),
+                       dimnames=list(c(), dfnames)),
+                stringsAsFactors=F)
+for(i in 1:length(results)){
+  df[i,"time_period"] <- results[[i]]$timePeriod$period
+  df[i,"time_identifier"] <- results[[i]]$timePeriod$code
+  df[i,"geographic_level"] <- results[[i]]$geographicLevel
+  for(j in 1:length(results[[i]]$locations)){
+    loc_name <- names(results[[i]]$locations[j])
+    df[i,loc_name] <- results[[i]]$locations[[loc_name]]
+  }
+  for(j in 1:length(results[[i]]$filters)){
+    filter_name <- names(results[[i]]$filters[j])
+    df[i,filter_name] <- results[[i]]$filters[[filter_name]]
+  }
+  for(j in 1:length(results[[i]]$values)){
+    value_name <- names(results[[i]]$values[j])
+    df[i,value_name] <- results[[i]]$values[[value_name]]
+  }
+}
+df
+}
