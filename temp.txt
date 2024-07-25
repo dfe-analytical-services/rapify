@@ -1,29 +1,26 @@
 {
-  "criteria": {
-      "and": [
-  {
+        "criteria": {
+           "and": [
+               {
         "geographicLevels": {
           "eq": "NAT"
         }
-      },
-  {
-"timePeriods": {
-  "in": [
-    {
-      "period": "2024",
-      "code": "W26"
-    }
-  ]
-}
-},
-      {
+      },{
+      "timePeriods": {
+        "in": [
+          {
+            "period": "2024",
+            "code": "W26"
+          }
+        ]
+      }
+    },  {
         "filters": {
-          "eq": "9ZW4v"
+          "eq": "0LoT5"
         }
-      },
-      {
+      },  {
         "filters": {
-          "eq": "m8R9K"
+          "in": ["XT3fK","TWtPJ"]
         }
       }
     ]

@@ -52,21 +52,33 @@ get_filter_item_id <- function(colname, item, filter_meta) {
   filter_meta %>%
     filter(
       id == colname,
-      item_label == item
+      item_label %in% c(item)
     ) %>%
     pull(item_id)
 }
 
 filter_query <- function(colname, item, filter_meta) {
-  geography_query <- paste0(
-    '  {
+  if (length(item) == 1) {
+    geography_query <- paste0(
+      '  {
         "filters": {
           "eq": "',
-    get_filter_item_id(colname, item, filter_meta),
-    '"
+      get_filter_item_id(colname, item, filter_meta),
+      '"
         }
       }'
-  )
+    )
+  } else {
+    geography_query <- paste0(
+      '  {
+        "filters": {
+          "in": ["',
+      paste0(get_filter_item_id(colname, item, filter_meta), collapse = '","'),
+      '"]
+        }
+      }'
+    )
+  }
 }
 
 # Running this with brute long code for now so I understand what's going on.

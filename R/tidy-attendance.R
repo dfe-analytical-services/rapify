@@ -109,7 +109,7 @@ read_api_reasons <- function(
     parse = TRUE,
     time_frame = "Latest week",
     geographic_level = "National",
-    education_phase = "Primary",
+    establishment_phase = "Primary",
     area_name = "England",
     dataset_id = "53e59001-f5b5-9370-8527-8b7ff006b114") {
   # Get the data-set meta data
@@ -119,6 +119,15 @@ read_api_reasons <- function(
     "/meta"
   ))
   filters <- parse_ees_api_meta_filters(meta_response)
+  meta <- meta_response %>%
+    content("text") %>%
+    fromJSON()
+  latest_week <- meta$timePeriods %>%
+    mutate(year_week = as.numeric(paste0(period, ".", str_pad(gsub("W", "", code), 2, pad = 0)))) %>%
+    pull(year_week) %>%
+    max() %>%
+    format() %>%
+    gsub(".*\\.", "", .)
 
   # Define the query url
   url <- paste0(
@@ -128,38 +137,33 @@ read_api_reasons <- function(
   )
 
   if (time_frame == "Latest week") {
-    time_code <- as.numeric(paste0())
+    time_period_query <- paste0(
+      '{
+      "timePeriods": {
+        "in": [
+          {
+            "period": "2024",
+            "code": "W', latest_week, '"
+          }
+        ]
+      }
+    }'
+    )
+    time_frame_query <- filter_query("time_frame", c("Daily", "Weekly"), filters)
   }
 
   # Create the query
   body <- paste0(
     '{
-  "criteria": {
-      "and": [
-',
-    geography_query(geographic_level), ',
-  {
-"timePeriods": {
-  "in": [
-    {
-      "period": "2024",
-      "code": "W26"
-    }
-  ]
-}
-},
-      {
-        "filters": {
-          "eq": "9ZW4v"
-        }
-      },
-      {
-        "filters": {
-          "eq": "m8R9K"
-        }
-      }
+        "criteria": {
+           "and": [
+             ', geography_query(geographic_level),
+    ",", time_period_query,
+    ",",
+    filter_query("establishment_phase", establishment_phase, filters),
+    ",", time_frame_query, '
     ]
-},
+  },
   "indicators": [
     "pupil_count"
   ],
