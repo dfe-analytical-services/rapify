@@ -22,7 +22,7 @@ primary_filters <- c(
   "establishment_phase"
 )
 
-initial_clean <- function(attendance_data){
+initial_clean <- function(attendance_data) {
   attendance_cleaned <- attendance_data %>%
     rename(
       time_frame = breakdown,
@@ -35,17 +35,17 @@ initial_clean <- function(attendance_data){
     ) %>%
     rename_all(
       starts_with("reason_" ~ paste0(., "_count"))
-      ~ stringr::str_replace_all(., 'auth_', 'authorised_')
-      )
-  time_lookup <- attendance_cleaned %>% 
-    select(attendance_date, time_period, time_identifier, week_commencing) %>% 
-    distinct() %>% 
-    arrange(week_commencing, time_period, time_identifier) %>% 
+      ~ stringr::str_replace_all(., "auth_", "authorised_")
+    )
+  time_lookup <- attendance_cleaned %>%
+    select(attendance_date, time_period, time_identifier, week_commencing) %>%
+    distinct() %>%
+    arrange(week_commencing, time_period, time_identifier) %>%
     filter(
-      !is.na(week_commencing), 
-      time_period==week_commencing %>% lubridate::year()
-      )
-  attendance_cleaned <- attendance_cleaned %>% 
+      !is.na(week_commencing),
+      time_period == week_commencing %>% lubridate::year()
+    )
+  attendance_cleaned <- attendance_cleaned %>%
     select(-week_commencing, -time_period, -time_identifier) %>%
     left_join(time_lookup)
   attendance_cleaned
@@ -89,19 +89,19 @@ create_reasons_tidy <- function() {
     ) %>%
     select(all_of(c(primary_filters, "reason", "pupil_count")))
   write_csv(reason_tidy, paste0(data_folder, "attendance_reasons.csv"))
-  reason_meta <- meta_template(reason_tidy) %>% 
+  reason_meta <- meta_template(reason_tidy) %>%
     filter(!(col_name %in% c("attendance_date", "week_commencing", "time_frame"))) %>%
     mutate(
       filter_grouping_column = if_else(col_name == "day_number", "time_frame", "")
-      )
+    )
   write_csv(reason_meta, paste0(data_folder, "attendance_reasons.meta.csv"))
   reason_tidy
 }
 
-check_api_reasons <- function(){
-  url <- 'https://dev.statistics.api.education.gov.uk/api/v1.0/data-sets/53e59001-f5b5-9370-8527-8b7ff006b114'
+check_api_reasons <- function() {
+  url <- "https://dev.statistics.api.education.gov.uk/api/v1.0/data-sets/53e59001-f5b5-9370-8527-8b7ff006b114"
   response <- httr::GET(url)
-  content(response) 
+  content(response)
 }
 
 
@@ -111,9 +111,7 @@ read_api_reasons <- function(
     geographic_level = "National",
     education_phase = "Primary",
     area_name = "England",
-    dataset_id = "53e59001-f5b5-9370-8527-8b7ff006b114"
-    ){
-  
+    dataset_id = "53e59001-f5b5-9370-8527-8b7ff006b114") {
   # Get the data-set meta data
   meta_response <- httr::GET(paste0(
     "https://dev.statistics.api.education.gov.uk/api/v1.0/data-sets/",
@@ -121,25 +119,25 @@ read_api_reasons <- function(
     "/meta"
   ))
   filters <- parse_ees_api_meta_filters(meta_response)
-  
+
   # Define the query url
   url <- paste0(
     "https://dev.statistics.api.education.gov.uk/api/v1.0/data-sets/",
     dataset_id,
     "/query"
-    )
-  
-  if(time_frame == 'Latest week'){
+  )
+
+  if (time_frame == "Latest week") {
     time_code <- as.numeric(paste0())
   }
-  
+
   # Create the query
   body <- paste0(
-  '{
+    '{
   "criteria": {
       "and": [
-', 
-  geography_query(geographic_level), ',
+',
+    geography_query(geographic_level), ',
   {
 "timePeriods": {
   "in": [
@@ -169,19 +167,18 @@ read_api_reasons <- function(
   "page": 1,
   "pageSize": 1000
 }'
-)
-  cat(body, file = 'temp.txt')
-  
+  )
+  cat(body, file = "temp.txt")
+
   response <- httr::POST(
     url,
-    body=body, 
-    encode='json',
+    body = body,
+    encode = "json",
     content_type("application/json")
   )
   output <- content(response)
-  if(parse){
+  if (parse) {
     output <- parse_ees_api_output(output)
   }
   output
 }
-
