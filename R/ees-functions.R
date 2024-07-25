@@ -57,3 +57,21 @@ for(i in 1:length(results)){
 }
 df
 }
+
+
+geography_query <- function(query_geographic_level){
+  api_geography_lookup <- data.frame(
+    geographic_level = c('National'),
+    api_geographic_level = c("NAT")
+  )
+  geography_query <- paste0(
+    '  {
+        "geographicLevels": {
+          "eq": "', 
+    api_geography_lookup %>% 
+      filter(geographic_level==query_geographic_level) %>% 
+      pull(api_geographic_level),'"
+        }
+      }')
+  
+}

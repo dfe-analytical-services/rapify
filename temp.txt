@@ -1,0 +1,37 @@
+{
+  "criteria": {
+      "and": [
+  {
+        "geographicLevels": {
+          "eq": "NAT"
+        }
+      },
+  {
+"timePeriods": {
+  "in": [
+    {
+      "period": "2024",
+      "code": "W26"
+    }
+  ]
+}
+},
+      {
+        "filters": {
+          "eq": "9ZW4v"
+        }
+      },
+      {
+        "filters": {
+          "eq": "m8R9K"
+        }
+      }
+    ]
+},
+  "indicators": [
+    "pupil_count"
+  ],
+  "debug": true,
+  "page": 1,
+  "pageSize": 1000
+}

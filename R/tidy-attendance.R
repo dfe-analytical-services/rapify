@@ -105,16 +105,28 @@ check_api_reasons <- function(){
 }
 
 
-read_api_reasons <- function(parse = TRUE){
-  url <- 'https://dev.statistics.api.education.gov.uk/api/v1.0/data-sets/53e59001-f5b5-9370-8527-8b7ff006b114/query'
-  body <- '{
+read_api_reasons <- function(
+    parse = TRUE,
+    time_frame = "Latest week",
+    geographic_level = "National",
+    education_phase = "Primary",
+    area_name = "England",
+    dataset_id = "53e59001-f5b5-9370-8527-8b7ff006b114"
+    ){
+  # Define the query url
+  url <- paste0(
+    "https://dev.statistics.api.education.gov.uk/api/v1.0/data-sets/",
+    dataset_id,
+    "/query"
+    )
+  
+  # Create the query
+  body <- paste0(
+  '{
   "criteria": {
       "and": [
-  {
-        "geographicLevels": {
-          "eq": "NAT"
-        }
-        },
+', 
+  geography_query(geographic_level), ',
   {
 "timePeriods": {
   "in": [
@@ -144,6 +156,8 @@ read_api_reasons <- function(parse = TRUE){
   "page": 1,
   "pageSize": 1000
 }'
+)
+  cat(body, file = 'temp.txt')
   
   response <- httr::POST(
     url,
