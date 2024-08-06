@@ -7,6 +7,7 @@ library(httr)
 library(xml2)
 library(jsonlite)
 library(tibble)
+library(dfeR)
 
 source("R/ees-functions.R")
 

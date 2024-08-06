@@ -160,6 +160,21 @@
       ],
       "Hash": "411ca2c03b1ce5f548345d2fc2685f7a"
     },
+    "dfeR": {
+      "Package": "dfeR",
+      "Version": "0.3.1",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "dfe-analytical-services",
+      "RemoteRepo": "dfeR",
+      "RemoteRef": "main",
+      "RemoteSha": "f0823781f2fa9db697ae2861a8fa8dc2a29fefcc",
+      "Requirements": [
+        "lifecycle"
+      ],
+      "Hash": "642015c8e376326573dd33c9f7d3fa79"
+    },
     "digest": {
       "Package": "digest",
       "Version": "0.6.36",
