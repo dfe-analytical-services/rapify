@@ -17,7 +17,7 @@ tidydata <-pivot_filter_indicator(teacher_leader_development_ecf_2022_23 ,
 # grepl() - return true if a sub-string is found in a string- used to search for patterns within strings and determine if a particular pattern exists.
 # %>% - pipe (send output from one function as input for the next)
 cleaned <- tidydata %>% mutate(
-dummy_column = 23846 ,
+
   filter_ecfs = case_when( 
     type_ects_training == "swfc_ects" ~ "Early career teachers in School Workforce Census", 
     type_ects_training == "swfc_ects_school_led" ~ "Percentage of ECTs who started school-led ECF-based induction",
@@ -31,7 +31,9 @@ dummy_column = 23846 ,
     grepl("provider_led", type_ects_training) ~ "Provider led",
     grepl("school_led", type_ects_training) ~ "School led",
     .default = 'Total'  ) , teacher_count = if_else(is.na(total),count,total)
-) 
+) %>%
+  select(-type_ects_training , -total , -count)
+
 View(cleaned)
 
 
