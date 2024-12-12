@@ -13,23 +13,30 @@ source("R/ees-functions.R")
 
 home_dir <- Sys.getenv("HOME") |> strsplit("\\\\")
 
-data_folder <- paste0(paste0(home_dir[[1]][1:3], collapse = "/"), "/test-data/api-attendance/")
+data_folder <- paste0(paste0(home_dir[[1]][1:3], collapse = "/"), "/offline-data/api-attendance/")
 
 primary_filters <- c(
   "time_period", "time_identifier", "time_frame", "geographic_level",
   "country_code", "country_name",
   "region_code", "region_name",
   "new_la_code", "la_name", "old_la_code",
-  "week_commencing", "day_number", "attendance_date",
-  "establishment_phase"
+  "week_commencing", "weekday", "attendance_date",
+  "education_phase"
 )
 
-discarded_filters <- c("pa_flag", "academic_year")
 
-pupil_school_file_indicators <- c("enrolments", "num_schools", "total_enrolments", "ytd_enrolments", "total_num_schools")
+discarded_filters <- c("academic_year")
+
+school_indicators <- c("num_schools", "total_num_schools")
+
+enrolment_indicators <- c("enrolments", "total_enrolments", "ytd_enrolments")
+
+persistent_absence_indicators <- c("pa_flag", "pa_perc", "pa_percscaled")
 
 description_mapping <- data.frame(
-  original = c("unauth_hol_perc",
+  original = c(
+    "day_number",
+    "unauth_hol_perc",
                "unauth_late_registers_closed_perc",
                "unauth_not_yet_perc",
                "unauth_oth_perc",
@@ -42,7 +49,9 @@ description_mapping <- data.frame(
                "illness_perc",
                "appointments_perc",
                "attendance_perc"),
-  cleaned = c("reason_g_unauthorised_holiday_perc",
+  cleaned = c(
+    "weekday",
+    "reason_g_unauthorised_holiday_perc",
               "reason_u_unauthorised_late_after_registers_closed_perc",
               "reason_n_no_reason_yet_perc",
               "reason_o_other_unauthorised_perc",
@@ -70,12 +79,21 @@ initial_clean <- function(attendance_data) {
     rename(any_of(setNames(paste0(description_mapping$original, "_scaled"), paste0(description_mapping$cleaned, "scaled")))) %>%
     rename(
       time_frame = breakdown,
-      establishment_phase = school_type
+      education_phase = school_type
     ) %>%
     mutate(
       time_identifier = paste("Week", time_identifier),
       time_frame = gsub("YTD", "Year to date", time_frame),
-      day_number = if_else(time_frame == "Weekly", "Total", as.character(day_number))
+      weekday = case_when(
+        time_frame == "Weekly" ~ "All days",
+        time_frame == "Year to date" ~ "All days",
+        weekday == 1 ~ "Monday",
+        weekday == 2 ~ "Tuesday",
+        weekday == 3 ~ "Wednesday",
+        weekday == 4 ~ "Thursday",
+        weekday == 5 ~ "Friday",
+        .default = "Week"
+      )
     ) %>%
     rename_with(
       ~ paste0(., "_count"), 
@@ -124,23 +142,28 @@ create_reasons_tidy <- function() {
     filter(grepl("reason", colname)) %>%
     pull(colname)
   reason_tidy <- att_underlying %>%
-    select(-all_of(c(pupil_school_file_indicators, discarded_filters))) %>%
+    select(-all_of(
+      c(
+        school_indicators, 
+        enrolment_indicators, 
+        persistent_absence_indicators,
+        discarded_filters)
+      )) %>%
     pivot_longer(
       !any_of(c(primary_filters)),
                  names_to = c("attendance_description", ".value"),
                  names_pattern = "^(.*)_(.*)"
     ) %>%
     mutate(
-      reason = case_when(
-        attendance_description == "reason_present" ~ "Total",
-        grepl("reason_", attendance_description) ~ str_to_sentence(
+      attendance_reason = case_when(
+        grepl("reason_", attendance_description) | attendance_description %in% c("pa", "excluded") ~ str_to_sentence(
           attendance_description %>% 
             sub("reason_", "", .) %>%
             gsub("_", " ", .)
           ),
         .default= 'Total'
       ),
-      reason = gsub("aea ", "", reason),
+      attendance_reason= gsub("aea ", "", attendance_reason),
       attendance_type = case_when(
         grepl("unauthorised", attendance_description) ~ "Unauthorised",
         grepl("authorised", attendance_description) ~ "Authorised",
@@ -165,14 +188,87 @@ create_reasons_tidy <- function() {
       session_percent = if_else(is.na(perc), "x", format(dfeR::round_five_up(perc, dp=2))),
       session_scaled = if_else(is.na(percscaled), "x", format(dfeR::round_five_up(percscaled, dp=1)))
     ) %>%
-    select(all_of(c(primary_filters, "attendance_description", "attendance_status", "attendance_type", "reason", "session_count", "session_percent", "session_scaled")))
-  write_csv(reason_tidy, paste0(data_folder, "attendance_reasons.csv"))
-  reason_meta <- meta_template(reason_tidy) %>%
-    filter(!(col_name %in% c("attendance_date", "week_commencing", "time_frame"))) %>%
     mutate(
-      filter_grouping_column = if_else(col_name == "day_number", "time_frame", "")
+      attendance_reason= case_when(
+        attendance_status != "Not determined" & attendance_type != "Not determined" & attendance_reason== "Total" ~ paste("All", tolower(attendance_type)),
+        attendance_status != "Not determined" & attendance_type == "Not determined" & attendance_reason== "Total" ~ paste("All", tolower(attendance_status)),
+        .default = attendance_reason
+      ),
+      attendance_type = case_when(
+        attendance_status != "Not determined" & attendance_type == "Not determined" ~ paste("All", tolower(attendance_status)),
+        .default = attendance_type
+      ),
+      attendance_reason= paste(stringr::str_replace(attendance_reason, "^[A-Z] ", ""), stringr::str_extract(attendance_reason, "^[A-Z] ")) |> 
+        str_replace(" NA", "") |> 
+        str_replace(" ([A-Z]) $", " \\(\\1\\)") |>
+        str_to_sentence()
+    ) %>%
+    select(all_of(c(primary_filters, "attendance_description", "attendance_status", "attendance_type", "attendance_reason", "session_count", "session_percent", "session_scaled")))
+  write_csv(reason_tidy, paste0(data_folder, "attendance_data_api.csv"))
+  reason_meta <- meta_template(reason_tidy) %>%
+    filter(!(col_name %in% c("attendance_description", "attendance_date", "week_commencing", "time_frame"))) %>%
+    mutate(
+      filter_grouping_column = if_else(col_name == "weekday", "time_frame", ""),
+      col_type = case_when(
+        col_name %in% c("session_count", "session_percent", "session_scaled") ~ "Indicator",
+        .default = "Filter"
+      )
     )
-  write_csv(reason_meta, paste0(data_folder, "attendance_reasons.meta.csv"))
+  write_csv(reason_meta, paste0(data_folder, "attendance_data_api.meta.csv"))
   reason_tidy
 }
 
+create_enrol_tidy <- function(){
+  att_underlying <- read_attendance()
+  tidy_enrol_pa <- att_underlying |>
+    select(all_of(c(primary_filters, school_indicators, enrolment_indicators))) |>
+    rename(
+      school_count_submitted = num_schools, 
+      school_count_all = total_num_schools, 
+      enrolment_count_submitted = enrolments,
+      enrolment_count_all = total_enrolments,
+      enrolments_year_to_date = ytd_enrolments
+    ) |>
+    mutate(
+      across(region_code:old_la_code, ~ if_else(is.na(.), "", as.character(.))),
+      across(school_count_submitted:enrolments_year_to_date, ~ if_else(is.na(.), "x", as.character(.))),
+    )
+  write_csv(tidy_enrol_pa, paste0(data_folder, "attendance_enrol_api.csv"))
+  enrol_pa_meta <- meta_template(tidy_enrol_pa) %>%
+    filter(!(col_name %in% c("attendance_description", "attendance_date", "week_commencing", "time_frame"))) %>%
+    mutate(
+      filter_grouping_column = if_else(col_name == "weekday", "time_frame", ""),
+      col_type = case_when(
+        grepl("school_count|enrolment", col_name) ~ "Indicator",
+        .default = "Filter"
+      )
+    )
+  write_csv(enrol_pa_meta, paste0(data_folder, "attendance_enrol_api.meta.csv"))
+}
+
+create_persistent_absence_tidy <- function(){
+  att_underlying <- read_attendance()
+  tidy_enrol_pa <- att_underlying |>
+    select(all_of(c(primary_filters, persistent_absence_indicators))) |>
+    rename(
+      persistent_absence_flag = pa_flag,
+      persistent_absence_percent = pa_perc,
+      persistent_absence_percent_scaled = pa_percscaled
+    ) |>
+    mutate(
+      across(region_code:old_la_code, ~ if_else(is.na(.), "", as.character(.))),
+      across(persistent_absence_flag:persistent_absence_percent_scaled, ~ if_else(is.na(.), "x", as.character(.))),
+    ) |>
+    filter(time_frame == "Year to date")
+  write_csv(tidy_enrol_pa, paste0(data_folder, "attendance_persistent_absence_api.csv"))
+  enrol_pa_meta <- meta_template(tidy_enrol_pa) %>%
+    filter(!(col_name %in% c("weekday", "attendance_description", "attendance_date", "week_commencing", "time_frame"))) %>%
+    mutate(
+      filter_grouping_column = if_else(col_name == "weekday", "time_frame", ""),
+      col_type = case_when(
+        grepl("persistent_absence", col_name) ~ "Indicator",
+        .default = "Filter"
+      )
+    )
+  write_csv(enrol_pa_meta, paste0(data_folder, "attendance_persistent_absence_api.meta.csv"))
+}
