@@ -206,11 +206,11 @@ create_reasons_tidy <- function() {
     select(all_of(c(primary_filters, "attendance_description", "attendance_status", "attendance_type", "attendance_reason", "session_count", "session_percent", "session_scaled")))
   write_csv(reason_tidy, paste0(data_folder, "attendance_data_api.csv"))
   reason_meta <- meta_template(reason_tidy) %>%
-    filter(!(col_name %in% c("attendance_description", "attendance_date", "week_commencing", "time_frame"))) %>%
+    filter(!(col_name %in% c("attendance_description", "week_commencing"))) %>%
     mutate(
-      filter_grouping_column = if_else(col_name == "weekday", "time_frame", ""),
+      filter_grouping_column = "",
       col_type = case_when(
-        col_name %in% c("session_count", "session_percent", "session_scaled") ~ "Indicator",
+        col_name %in% c("session_count", "session_percent", "session_scaled", "attendance_date") ~ "Indicator",
         .default = "Filter"
       )
     )
