@@ -20,7 +20,7 @@ primary_filters <- c(
   "country_code", "country_name",
   "region_code", "region_name",
   "new_la_code", "la_name", "old_la_code",
-  "week_commencing", "weekday", "attendance_date",
+  "week_commencing", "reference_date",
   "education_phase"
 )
 
@@ -79,14 +79,17 @@ initial_clean <- function(attendance_data) {
     rename(any_of(setNames(paste0(description_mapping$original, "_scaled"), paste0(description_mapping$cleaned, "scaled")))) %>%
     rename(
       time_frame = breakdown,
-      education_phase = school_type
+      education_phase = school_type,
+      reference_date = attendance_date
     ) %>%
     mutate(
-      time_identifier = paste("Week", time_identifier),
-      time_frame = gsub("YTD", "Year to date", time_frame),
-      weekday = case_when(
-        time_frame == "Weekly" ~ "All days",
-        time_frame == "Year to date" ~ "All days",
+      time_identifier = case_when(
+        time_frame == "YTD" ~ paste("Week", max(time_identifier)),
+        .default = paste("Week", time_identifier)
+        ),
+      time_frame = case_when(
+        time_frame == "Weekly" ~ "Week",
+        time_frame == "YTD" ~ "Year to date",
         weekday == 1 ~ "Monday",
         weekday == 2 ~ "Tuesday",
         weekday == 3 ~ "Wednesday",
@@ -105,28 +108,18 @@ initial_clean <- function(attendance_data) {
       ) %>%
     rename_with(~ stringr::str_replace_all(., "auth_", "authorised_")) %>%
     rename_with(~ stringr::str_replace_all(., "_perc_scaled", "_percscaled")) 
-  time_lookup <- attendance_cleaned %>%
-    select(attendance_date, time_period, time_identifier, week_commencing) %>%
-    distinct() %>%
-    arrange(week_commencing, time_period, time_identifier) %>%
-    filter(
-      !is.na(week_commencing),
-      time_period == week_commencing %>% lubridate::year()
-    )
-  attendance_cleaned <- attendance_cleaned %>%
-    select(-week_commencing, -time_period, -time_identifier) %>%
-    left_join(time_lookup)
   attendance_cleaned
 }
 
-read_attendance <- function() {
+read_attendance <- function(refresh = FALSE) {
   url <- "https://raw.githubusercontent.com/dfe-analytical-services/attendance-data-dashboard/main/data/attendance_data_dashboard.csv"
   data_file <- "attendance_data_dashboard.csv"
-  if (!file.exists(paste0(data_folder, data_file))) {
+  if (refresh || !file.exists(paste0(data_folder, data_file))) {
     message(paste0(data_folder, data_file, "\n not found. Downloading from repository."))
-    att_wide <- read_csv(url) %>%
-      initial_clean()
+    att_wide <- read_csv(url)
     att_wide |> write_csv(paste0(data_folder, data_file))
+    att_wide <- att_wide  %>%
+      initial_clean()
   } else {
     message(paste0(data_folder, data_file, " found. Readng in from file
                    ."))
@@ -136,8 +129,8 @@ read_attendance <- function() {
   att_wide
 }
 
-create_reasons_tidy <- function() {
-  att_underlying <- read_attendance()
+create_reasons_tidy <- function(refresh = FALSE) {
+  att_underlying <- read_attendance(refresh = refresh)
   reason_filters <- data.frame(colname = names(att_underlying)) %>%
     filter(grepl("reason", colname)) %>%
     pull(colname)
@@ -206,11 +199,11 @@ create_reasons_tidy <- function() {
     select(all_of(c(primary_filters, "attendance_description", "attendance_status", "attendance_type", "attendance_reason", "session_count", "session_percent", "session_scaled")))
   write_csv(reason_tidy, paste0(data_folder, "attendance_data_api.csv"))
   reason_meta <- meta_template(reason_tidy) %>%
-    filter(!(col_name %in% c("attendance_description", "week_commencing"))) %>%
+    filter(!(col_name %in% c("weekday", "attendance_description", "week_commencing"))) %>%
     mutate(
       filter_grouping_column = "",
       col_type = case_when(
-        col_name %in% c("session_count", "session_percent", "session_scaled", "attendance_date") ~ "Indicator",
+        col_name %in% c("session_count", "session_percent", "session_scaled", "reference_date") ~ "Indicator",
         .default = "Filter"
       )
     )
@@ -235,7 +228,7 @@ create_enrol_tidy <- function(){
     )
   write_csv(tidy_enrol_pa, paste0(data_folder, "attendance_enrol_api.csv"))
   enrol_pa_meta <- meta_template(tidy_enrol_pa) %>%
-    filter(!(col_name %in% c("attendance_description", "attendance_date", "week_commencing", "time_frame"))) %>%
+    filter(!(col_name %in% c("attendance_description", "reference_date", "week_commencing", "time_frame"))) %>%
     mutate(
       filter_grouping_column = if_else(col_name == "weekday", "time_frame", ""),
       col_type = case_when(
@@ -262,7 +255,7 @@ create_persistent_absence_tidy <- function(){
     filter(time_frame == "Year to date")
   write_csv(tidy_enrol_pa, paste0(data_folder, "attendance_persistent_absence_api.csv"))
   enrol_pa_meta <- meta_template(tidy_enrol_pa) %>%
-    filter(!(col_name %in% c("weekday", "attendance_description", "attendance_date", "week_commencing", "time_frame"))) %>%
+    filter(!(col_name %in% c("weekday", "attendance_description", "reference_date", "week_commencing", "time_frame"))) %>%
     mutate(
       filter_grouping_column = if_else(col_name == "weekday", "time_frame", ""),
       col_type = case_when(
