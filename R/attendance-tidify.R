@@ -176,20 +176,31 @@ create_reasons_tidy <- function(refresh = FALSE) {
             sub("reason_", "", .) %>%
             gsub("_", " ", .)
         ),
-        attendance_description %in% c("authorised_mobile_child", "authorised_performance", "authorised_interview", "authorised_part_time") ~ attendance_description |>
-          str_replace("authorised", "") |>
+        grepl("overall", attendance_description) ~ attendance_description |>
           str_replace("_", " ") |>
-          str_trim() |> str_to_sentence(),
-        .default = "Total"
+          str_trim()  |> 
+        str_to_sentence(),
+        .default = paste(
+          "All",
+          attendance_description |>
+          str_replace("authorised", "") |>
+          str_replace("aea", "") |>
+          str_replace("_", " ") |>
+          str_trim() 
+          ) |> 
+          str_to_sentence()
       ),
-      attendance_reason = gsub("aea ", "", attendance_reason),
       attendance_type = case_when(
         grepl("unauthorised", attendance_description) ~ "Unauthorised",
         grepl("authorised", attendance_description) ~ "Authorised",
         grepl("aea", attendance_description) ~ "Approved educational activity",
         grepl("approved_educational", attendance_description) ~ "Approved educational activity",
         grepl("present", attendance_description) ~ "Present",
-        .default = "Not determined"
+        grepl("absence", attendance_description) ~ "All absence",
+        grepl("attendance", attendance_description) ~ "All attendance",
+        grepl("possible_sessions", attendance_description) ~ "All possible sessions",
+        grepl("late_sessions", attendance_description) ~ "All late sessions",
+        .default = "Management and legacy codes"
       ),
       attendance_status = case_when(
         grepl("authorised", attendance_description) ~ "Absence",
@@ -200,7 +211,7 @@ create_reasons_tidy <- function(refresh = FALSE) {
         grepl("present", attendance_description) ~ "Attendance",
         grepl("possible_sessions", attendance_description) ~ "Possible sessions",
         grepl("late_sessions", attendance_description) ~ "Late sessions",
-        .default = "Not determined"
+        .default = "Management and legacy codes"
       ),
       across(region_code:old_la_code, ~ if_else(is.na(.), "", as.character(.))),
       session_count = if_else(is.na(count), "x", format(count)),
@@ -223,7 +234,10 @@ create_reasons_tidy <- function(refresh = FALSE) {
         str_to_sentence()
     ) %>%
     select(all_of(c(primary_filters, "attendance_description", "attendance_status", "attendance_type", "attendance_reason", "session_count", "session_percent", "session_scaled")))
-  write_csv(reason_tidy, paste0(data_folder, "attendance_data_api.csv"))
+  write_csv(
+    reason_tidy, 
+    paste0(data_folder, "pupil-attendance-reasons_api.csv")
+    )
   reason_meta <- meta_template(reason_tidy) %>%
     filter(!(col_name %in% c("weekday", "attendance_description", "week_commencing"))) %>%
     mutate(
@@ -233,19 +247,19 @@ create_reasons_tidy <- function(refresh = FALSE) {
         .default = "Filter"
       )
     )
-  duplicated_rows_desc <- reason_tidy |>
-    select(-session_count, -session_percent, -session_scaled, -weekday, -week_commencing, -attendance_description) |>
-    filter(geographic_level == "National") |>
-    summarise(count = n(), .by = everything()) |>
-    filter(count > 1) |>
-    left_join(
-      x |> select(-session_count, -session_percent, -session_scaled, -weekday, -week_commencing) |>
-        filter(geographic_level == "National")
-    ) |>
-    select(attendance_description) |>
-    distinct()
-  if (nrow(duplicated_rows_desc) > 0){print(duplicated_rows_desc)}
-  write_csv(reason_meta, paste0(data_folder, "attendance_data_api.meta.csv"))
+  write_csv(reason_meta, paste0(data_folder, "pupil-attendance-reasons_api.meta.csv"))
+  # duplicated_rows_desc <- reason_tidy |>
+  #   select(-session_count, -session_percent, -session_scaled, -weekday, -week_commencing, -attendance_description) |>
+  #   filter(geographic_level == "National") |>
+  #   summarise(count = n(), .by = everything()) |>
+  #   filter(count > 1) |>
+  #   left_join(
+  #     reason_tidy |> select(-session_count, -session_percent, -session_scaled, -weekday, -week_commencing) |>
+  #       filter(geographic_level == "National")
+  #   ) |>
+  #   select(attendance_description) |>
+  #   distinct()
+  # if (nrow(duplicated_rows_desc) > 0){print(duplicated_rows_desc)}
   reason_tidy
 }
 
