@@ -1,5 +1,5 @@
 # Create a draft meta data frame based on a given data set
-meta_template <- function(data) {
+meta_template <- function(data, add_filter_default = TRUE) {
   standard_indicators <- c("pupil_count", "pupil_fte", "pupil_percent")
   base_filters <- c(
     "time_period", "time_identifier", "geographic_level",
@@ -19,11 +19,23 @@ meta_template <- function(data) {
       ),
       label = stringr::str_to_sentence(gsub("_", " ", col_name)),
       indicator_grouping = "",
-      indicator_unit = "",
-      indicator_dp = "",
+      indicator_unit = case_when(
+        grepl("percent",col_name) ~ "%",
+        .default = ""
+      ),
+      indicator_dp = case_when(
+        grepl("percent",col_name) ~ "1",
+        grepl("count",col_name) ~ "0",
+        .default = ""
+      ),
       filter_hint = "",
       filter_grouping_column = ""
     )
+  if(add_filter_default){
+    meta <- meta |>
+      mutate(filter_default = "")
+  }
+  return(meta)
 }
 
 
