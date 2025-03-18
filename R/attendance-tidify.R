@@ -13,7 +13,33 @@ source("R/ees-functions.R")
 
 home_dir <- Sys.getenv("HOME") |> strsplit("\\\\")
 
+# The scripts expect the old-format dashboard data file to be in:
+# c:/Users/username/offline-data/api-attendance/
+# That's my go to for large (or unpublished) data files so that OneDrive doesn't start trying to 
+# sync them. You can use a different directory, but you'll need to set it here:
 data_folder <- paste0(paste0(home_dir[[1]][1:3], collapse = "/"), "/offline-data/api-attendance/")
+# It also assumes the file itself is saved as something like:
+# attendance_data_dashboard_2025_week10.csv
+# That can be changed further down if you don't like that convention.
+
+# Assuming you go with the above conventions for how to save the file, then you should just need
+# the following commands (updating the year/week reference as needed):
+# source("C:/Users/rbielby/repos/rapify/R/attendance-tidify.R")
+#   reasons_data <- create_reasons_tidy(source = "2025_week10")
+#   pa_data <- create_persistent_absence_tidy(source = "2025_week10")
+#   school_returns_data <- create_school_returns_tidy(source = "2025_week10")
+# Those will write out the following files to the directory given by data_folder:
+#   - pupil-attendance-reasons_2025_week10.csv / pupil-attendance-reasons_2025_week10.meta.csv
+#   - attendance_persistent_absence_2025_week10.csv / attendance_persistent_absence_2025_week10.meta.csv
+#   - attendance_submitting_school_counts_2025_week10.csv / attendance_submitting_school_counts_2025_week10.meta.csv
+
+# Note: Excel can't handle the resulting reasons_data file, because Excel is just a bit rubbish at handling large data sets. 
+# Best way to inspect it is to stay in R and use variants on this code to check what weeks have been included:
+#   tidy_data |> 
+#     select(time_period, time_identifier) |> 
+#     distinct() |> 
+#     View()
+
 
 primary_filters <- c(
   "time_period", "time_identifier", "time_frame", "geographic_level",
@@ -327,33 +353,6 @@ create_reasons_tidy <- function(source = "2025_week7", refresh = FALSE) {
   reason_tidy
 }
 
-create_enrol_tidy <- function() {
-  att_underlying <- read_attendance()
-  tidy_enrol_pa <- att_underlying |>
-    select(all_of(c(primary_filters, school_indicators, enrolment_indicators))) |>
-    rename(
-      school_count_submitted = num_schools,
-      school_count_all = total_num_schools,
-      enrolment_count_submitted = enrolments,
-      enrolment_count_all = total_enrolments,
-      enrolments_year_to_date = ytd_enrolments
-    ) |>
-    mutate(
-      across(region_code:old_la_code, ~ if_else(is.na(.), "", as.character(.))),
-      across(school_count_submitted:enrolments_year_to_date, ~ if_else(is.na(.), "x", as.character(.))),
-    )
-  write_csv(tidy_enrol_pa, paste0(data_folder, "attendance_enrol_", source, ".csv"))
-  enrol_pa_meta <- meta_template(tidy_enrol_pa) %>%
-    filter(!(col_name %in% c("attendance_description", "reference_date", "week_commencing", "time_frame"))) %>%
-    mutate(
-      filter_grouping_column = if_else(col_name == "weekday", "time_frame", ""),
-      col_type = case_when(
-        grepl("school_count|enrolment", col_name) ~ "Indicator",
-        .default = "Filter"
-      )
-    )
-  write_csv(enrol_pa_meta, paste0(data_folder, "attendance_enrol_api.meta.csv"))
-}
 
 create_persistent_absence_tidy <- function(source = "2025_week7", refresh = NULL) {
   att_underlying <- read_attendance(source = source, refresh = refresh)
@@ -433,3 +432,41 @@ create_school_returns_tidy <- function(source = "2025_week7", refresh = NULL) {
   return(tidy_enrol_schools)
 }
 
+
+# Test run lines for reasons data
+# tidy_data <- create_reasons_tidy(source = "2025_week10")
+# tidy_data |> select(time_period, time_identifier) |> distinct() |> print(n = 25)
+# 
+# tidy_file_data <- read_csv("../../offline-data/api-attendance/pupil-attendance-reasons_2025_week10.csv")
+# tidy_file_data |> select(time_period, time_identifier) |> distinct() |> print(n = 25)
+
+
+# Started this next function for enrolments, but didn't seem needed in the end. Have left it in, in 
+# case it becomes useful as a starting point for enrolments later down the line
+create_enrol_tidy <- function() {
+  att_underlying <- read_attendance()
+  tidy_enrol_pa <- att_underlying |>
+    select(all_of(c(primary_filters, school_indicators, enrolment_indicators))) |>
+    rename(
+      school_count_submitted = num_schools,
+      school_count_all = total_num_schools,
+      enrolment_count_submitted = enrolments,
+      enrolment_count_all = total_enrolments,
+      enrolments_year_to_date = ytd_enrolments
+    ) |>
+    mutate(
+      across(region_code:old_la_code, ~ if_else(is.na(.), "", as.character(.))),
+      across(school_count_submitted:enrolments_year_to_date, ~ if_else(is.na(.), "x", as.character(.))),
+    )
+  write_csv(tidy_enrol_pa, paste0(data_folder, "attendance_enrol_", source, ".csv"))
+  enrol_pa_meta <- meta_template(tidy_enrol_pa) %>%
+    filter(!(col_name %in% c("attendance_description", "reference_date", "week_commencing", "time_frame"))) %>%
+    mutate(
+      filter_grouping_column = if_else(col_name == "weekday", "time_frame", ""),
+      col_type = case_when(
+        grepl("school_count|enrolment", col_name) ~ "Indicator",
+        .default = "Filter"
+      )
+    )
+  write_csv(enrol_pa_meta, paste0(data_folder, "attendance_enrol_api.meta.csv"))
+}
