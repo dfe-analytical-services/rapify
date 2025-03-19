@@ -30,4 +30,6 @@ app_monthly_api |> write_csv(
 )
 
 
-fes_aims_achievments <- read_csv("../../offline-data/further-education/fes-underlying-data-aims-achievements-202425-q1.csv")
+app_monthly_starts_ud <- read_csv("../../offline-data/further-education/app-underlying-data-monthly-starts-202425-jan.csv")
+app_monthly_starts_ud |> select(start_month, start_month_number) |> distinct()
+
