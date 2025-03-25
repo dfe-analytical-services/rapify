@@ -353,8 +353,17 @@ create_reasons_tidy <- function(source = "2025_week7", refresh = FALSE) {
   reason_tidy
 }
 
-
-create_persistent_absence_tidy <- function(source = "2025_week7", refresh = NULL) {
+# Note that to avoid creating repeated major version changes, I'm appending previous data to the 
+# latest data. That means the resulting file has the year to date as measured for each 2 week 
+# release. Will look into a cleaner way to do this in future, but may need updates to EES itself.
+create_persistent_absence_tidy <- function(
+    source = "2025_week10", 
+    append_to = NULL, 
+    refresh = NULL) {
+  if (is.null(append_to)){
+    append_to <- source |> stringr::str_split( "week", simplify = TRUE)
+    append_to <- paste0(append_to[1], "week", as.numeric(append_to[2])-2)
+  }
   att_underlying <- read_attendance(source = source, refresh = refresh)
   tidy_enrol_pa <- att_underlying |>
     select(all_of(c(primary_filters, persistent_absence_indicators))) |>
@@ -365,10 +374,25 @@ create_persistent_absence_tidy <- function(source = "2025_week7", refresh = NULL
     ) |>
     mutate(
       across(region_code:old_la_code, ~ if_else(is.na(.), "", as.character(.))),
-      across(persistent_absence_flag:persistent_absence_percent_scaled, ~ if_else(is.na(.), "x", . |> dfeR::round_five_up(dp = 2) |> as.character())),
+      across(
+        persistent_absence_flag:persistent_absence_percent_scaled,
+        ~ if_else(
+          is.na(.), 
+          "x", 
+                  . |> dfeR::round_five_up(dp = 2) |> as.character()
+          )
+        )
     ) |>
     filter(time_frame == "Year to date") |>
     arrange(time_period, time_identifier, country_code, region_code, new_la_code, education_phase)
+  if(append_to != "no-append"){
+    existing_data <- read_csv(paste0(data_folder, "attendance_persistent_absence_", append_to, ".csv")) |>
+      mutate(
+        across(region_code:old_la_code, ~ if_else(is.na(.), "", as.character(.)))
+      )
+    tidy_enrol_pa <- tidy_enrol_pa |> 
+      bind_rows(existing_data)
+  }
   write_csv(
     tidy_enrol_pa |>
       select(-any_of(c("weekday", "attendance_description", "reference_date", "week_commencing", "persistent_absence_flag", "persistent_absence_percent_scaled"))),
