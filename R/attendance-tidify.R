@@ -356,6 +356,8 @@ create_reasons_tidy <- function(source = "2025_week7", refresh = FALSE) {
 # Note that to avoid creating repeated major version changes, I'm appending previous data to the 
 # latest data. That means the resulting file has the year to date as measured for each 2 week 
 # release. Will look into a cleaner way to do this in future, but may need updates to EES itself.
+# The appending requires that the previous release of data is available in the same directory
+# as you're writing the latest data to.
 create_persistent_absence_tidy <- function(
     source = "2025_week10", 
     append_to = NULL, 
