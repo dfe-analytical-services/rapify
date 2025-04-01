@@ -171,7 +171,7 @@ initial_clean <- function(attendance_data) {
     filter(time_frame == "Week") |>
     pull(reference_date) |>
     max(na.rm = TRUE)
-  message("Most recent week commencing date:", latest_week_beginning)
+  message("Most recent week commencing date: ", latest_week_beginning)
   attendance_cleaned <- attendance_cleaned %>%
     select(-week_commencing, -time_period, -time_identifier) %>%
     mutate(
@@ -191,11 +191,11 @@ initial_clean <- function(attendance_data) {
 read_attendance <- function(source, refresh = NULL) {
   if(is.null(refresh)){refresh = FALSE}
   if (source == "github") {
-    url <- "https://raw.githubusercontent.com/dfe-analytical-services/attendance-data-dashboard/main/data/attendance_data_dashboard.csv"
+    # url <- "https://raw.githubusercontent.com/dfe-analytical-services/attendance-data-dashboard/main/data/attendance_data_dashboard.csv"
     data_file <- "attendance_data_dashboard.csv"
     if (refresh || !file.exists(paste0(data_folder, data_file))) {
       message(paste0(data_folder, data_file, "\n not found. Downloading from repository."))
-      att_wide <- read_csv(url)
+      # att_wide <- read_csv(url)
       att_wide |> write_csv(paste0(data_folder, data_file))
       att_wide <- att_wide %>%
         initial_clean()
@@ -213,7 +213,7 @@ read_attendance <- function(source, refresh = NULL) {
   att_wide
 }
 
-create_reasons_tidy <- function(source = "2025_week7", refresh = FALSE) {
+create_reasons_tidy <- function(source = "2025_week12", refresh = FALSE) {
   att_underlying <- read_attendance(source = source, refresh = refresh)
   reason_filters <- data.frame(colname = names(att_underlying)) %>%
     filter(grepl("reason", colname)) %>%
@@ -359,7 +359,7 @@ create_reasons_tidy <- function(source = "2025_week7", refresh = FALSE) {
 # The appending requires that the previous release of data is available in the same directory
 # as you're writing the latest data to.
 create_persistent_absence_tidy <- function(
-    source = "2025_week10", 
+    source = "2025_week12", 
     append_to = NULL, 
     refresh = NULL) {
   if (is.null(append_to)){
@@ -420,7 +420,7 @@ create_persistent_absence_tidy <- function(
   return(tidy_enrol_pa)
 }
 
-create_school_returns_tidy <- function(source = "2025_week7", refresh = NULL) {
+create_school_returns_tidy <- function(source = "2025_week12", refresh = NULL) {
   att_underlying <- read_attendance(source = source, refresh = refresh)
   tidy_enrol_schools <- att_underlying |>
     select(all_of(c(primary_filters, school_indicators))) |>
@@ -469,8 +469,8 @@ create_school_returns_tidy <- function(source = "2025_week7", refresh = NULL) {
 
 # Started this next function for enrolments, but didn't seem needed in the end. Have left it in, in 
 # case it becomes useful as a starting point for enrolments later down the line
-create_enrol_tidy <- function() {
-  att_underlying <- read_attendance()
+create_enrol_tidy <- function(source = "2025_week12", refresh = NULL) {
+  att_underlying <- read_attendance(source = source, refresh = refresh)
   tidy_enrol_pa <- att_underlying |>
     select(all_of(c(primary_filters, school_indicators, enrolment_indicators))) |>
     rename(
