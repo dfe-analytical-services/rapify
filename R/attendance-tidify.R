@@ -213,7 +213,7 @@ read_attendance <- function(source, refresh = NULL) {
   att_wide
 }
 
-create_reasons_tidy <- function(source = "2025_week12", refresh = FALSE) {
+create_reasons_tidy <- function(source = "2025_week15", refresh = FALSE) {
   att_underlying <- read_attendance(source = source, refresh = refresh)
   reason_filters <- data.frame(colname = names(att_underlying)) %>%
     filter(grepl("reason", colname)) %>%
@@ -359,12 +359,12 @@ create_reasons_tidy <- function(source = "2025_week12", refresh = FALSE) {
 # The appending requires that the previous release of data is available in the same directory
 # as you're writing the latest data to.
 create_persistent_absence_tidy <- function(
-    source = "2025_week12", 
+    source = "2025_week15", 
     append_to = NULL, 
     refresh = NULL) {
   if (is.null(append_to)){
     append_to <- source |> stringr::str_split( "week", simplify = TRUE)
-    append_to <- paste0(append_to[1], "week", as.numeric(append_to[2])-2)
+    append_to <- paste0(append_to[1], "week", as.numeric(append_to[2])-1) #change last 2 to 1 if different week numbers
   }
   att_underlying <- read_attendance(source = source, refresh = refresh)
   tidy_enrol_pa <- att_underlying |>
@@ -420,7 +420,7 @@ create_persistent_absence_tidy <- function(
   return(tidy_enrol_pa)
 }
 
-create_school_returns_tidy <- function(source = "2025_week12", refresh = NULL) {
+create_school_returns_tidy <- function(source = "2025_week15", refresh = NULL) {
   att_underlying <- read_attendance(source = source, refresh = refresh)
   tidy_enrol_schools <- att_underlying |>
     select(all_of(c(primary_filters, school_indicators))) |>
@@ -469,7 +469,7 @@ create_school_returns_tidy <- function(source = "2025_week12", refresh = NULL) {
 
 # Started this next function for enrolments, but didn't seem needed in the end. Have left it in, in 
 # case it becomes useful as a starting point for enrolments later down the line
-create_enrol_tidy <- function(source = "2025_week12", refresh = NULL) {
+create_enrol_tidy <- function(source = "2025_week15", refresh = NULL) {
   att_underlying <- read_attendance(source = source, refresh = refresh)
   tidy_enrol_pa <- att_underlying |>
     select(all_of(c(primary_filters, school_indicators, enrolment_indicators))) |>
