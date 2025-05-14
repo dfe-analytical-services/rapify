@@ -364,7 +364,7 @@ create_persistent_absence_tidy <- function(
     refresh = NULL) {
   if (is.null(append_to)){
     append_to <- source |> stringr::str_split( "week", simplify = TRUE)
-    append_to <- paste0(append_to[1], "week", as.numeric(append_to[2])-3) # Change -2 to -1 or -3 if last publication week number isn't prev fortnight
+    append_to <- paste0(append_to[1], "week", as.numeric(append_to[2])-2) # Change -2 to -1 or -3 if last publication week number isn't prev fortnight
   }
   att_underlying <- read_attendance(source = source, refresh = refresh)
   tidy_enrol_pa <- att_underlying |>
