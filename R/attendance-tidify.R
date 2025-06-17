@@ -380,7 +380,7 @@ create_persistent_absence_tidy <- function(
         persistent_absence_flag:persistent_absence_percent_scaled,
         ~ if_else(
           is.na(.), 
-          "x", 
+          "c", 
                   . |> dfeR::round_five_up(dp = 2) |> as.character()
           )
         ),
@@ -392,8 +392,11 @@ create_persistent_absence_tidy <- function(
     existing_data <- read_csv(paste0(data_folder, "attendance_persistent_absence_", append_to, ".csv")) |>
           mutate(
         across(region_code:old_la_code, ~ if_else(is.na(.), "", as.character(.))),
+        persistent_absence_percent = if_else(
+          is.na(persistent_absence_percent),
+          "c",
+          as.character(persistent_absence_percent)),
         persistent_absence_percent = as.character(persistent_absence_percent) # Fix to solve double combine error
-        
       )
     print(sum(is.na(existing_data$persistent_absence_percent))) # Check for NAs
     tidy_enrol_pa <- tidy_enrol_pa |> 
@@ -430,7 +433,7 @@ create_school_returns_tidy <- function(source = "2025_week21", refresh = NULL) {
     select(all_of(c(primary_filters, school_indicators))) |>
     rename(school_submitted_count = num_schools, school_all_count = total_num_schools) |>
     mutate(
-      across(starts_with("school_"), ~ if_else(is.na(.), "x", as.character(.))),
+      across(starts_with("school_"), ~ if_else(is.na(.), "c", as.character(.))),
       across(region_code:old_la_code, ~ if_else(is.na(.), "", as.character(.)))
       ) |>
     arrange(time_period, time_identifier, country_code, region_code, new_la_code, education_phase)
@@ -486,6 +489,10 @@ create_enrol_tidy <- function(source = "2025_week21", refresh = NULL) {
     ) |>
     mutate(
       across(region_code:old_la_code, ~ if_else(is.na(.), "", as.character(.))),
+      across(
+        school_count_all:enrolments_year_to_date,
+        ~ if_else(school_count_submitted == 1, "c", as.character(.))
+      ),
       across(school_count_submitted:enrolments_year_to_date, ~ if_else(is.na(.), "x", as.character(.))),
     )
   write_csv(tidy_enrol_pa, paste0(data_folder, "attendance_enrol_", source, ".csv"))
