@@ -17,7 +17,7 @@ home_dir <- Sys.getenv("HOME") |> strsplit("\\\\")
 # c:/Users/username/offline-data/api-attendance/
 # That's my go to for large (or unpublished) data files so that OneDrive doesn't start trying to 
 # sync them. You can use a different directory, but you'll need to set it here:
-data_folder <- paste0(paste0(home_dir[[1]][1:3], collapse = "/"), "/offline-data/api-attendance/")
+data_folder <- "./attendance data/"
 # It also assumes the file itself is saved as something like:
 # attendance_data_dashboard_2025_week10.csv
 # That can be changed further down if you don't like that convention.
@@ -109,6 +109,10 @@ dm <- description_mapping %>%
 
 
 initial_clean <- function(attendance_data) {
+  # ✅ Rename school_type to education_phase if present
+  if ("school_type" %in% names(attendance_data)) {
+    names(attendance_data)[names(attendance_data) == "school_type"] <- "education_phase"
+  }
   date_format <- lubridate::guess_formats(
     attendance_data$attendance_date |> unique(), 
     c("ymd", "dmy")
@@ -234,7 +238,7 @@ read_attendance <- function(source, refresh = NULL) {
   att_wide
 }
 
-create_reasons_tidy <- function(source = "2025_week41", refresh = FALSE) {
+create_reasons_tidy <- function(source = "2026_week7", refresh = FALSE) {
   att_underlying <- read_attendance(source = source, refresh = refresh)
   reason_filters <- data.frame(colname = names(att_underlying)) %>%
     filter(grepl("reason", colname)) %>%
@@ -345,7 +349,7 @@ create_reasons_tidy <- function(source = "2025_week41", refresh = FALSE) {
       ),
       indicator_dp = case_when(
         col_name == "session_count" ~ "0",
-        col_name == "session_percent" ~ "1",
+        col_name == "session_percent" ~ "2",
         .default = indicator_dp
       ),
       filter_grouping_column = case_when(
@@ -377,25 +381,26 @@ create_reasons_tidy <- function(source = "2025_week41", refresh = FALSE) {
 # The appending requires that the previous release of data is available in the same directory
 # as you're writing the latest data to.
 create_persistent_absence_tidy <- function(
-    source = "2025_week41", 
+    source = "2026_week7", 
     append_to = NULL, 
     refresh = NULL) {
   if (is.null(append_to)){
     append_to <- source |> stringr::str_split( "week", simplify = TRUE)
-    append_to <- paste0(append_to[1], "week", as.numeric(append_to[2])-2) # Change -2 to -1 or -3 if last publication week number isn't prev fortnight
+    append_to <- paste0(append_to[1], "week", as.numeric(append_to[2])-1) # Change -2 to -1 or -3 if last publication week number isn't prev fortnight
   }
   att_underlying <- read_attendance(source = source, refresh = refresh)
   tidy_enrol_pa <- att_underlying |>
     select(all_of(c(primary_filters, persistent_absence_indicators))) |>
     rename(
       persistent_absence_flag = pa_flag,
-      persistent_absence_percent = pa_perc,
-      persistent_absence_percent_scaled = pa_percscaled
+      persistent_absence_percent = pa_perc
+      # persistent_absence_percent_scaled = pa_percscaled
     ) |>
     mutate(
       across(region_code:old_la_code, ~ if_else(is.na(.), "", as.character(.))),
       across(
-        persistent_absence_flag:persistent_absence_percent_scaled,
+        persistent_absence_flag:persistent_absence_percent,
+#         persistent_absence_flag:persistent_absence_percent_scaled,
         ~ if_else(
           is.na(.), 
           "c", 
@@ -406,29 +411,40 @@ create_persistent_absence_tidy <- function(
     ) |>
     filter(time_frame == "Year to date") |>
     arrange(time_period, time_identifier, country_code, region_code, new_la_code, education_phase)
-  if(append_to != "no-append"){
-    existing_data <- read_csv(paste0(data_folder, "attendance_persistent_absence_", append_to, ".csv")) |>
+  
+  append_path <- paste0(data_folder, "attendance_persistent_absence_", append_to, ".csv")
+  
+  if (append_to != "no-append" && file.exists(append_path)) {
+    message("Appending existing persistent absence file: ", append_path)
+    
+    existing_data <- read_csv(append_path) |>
       mutate(
         across(region_code:old_la_code, ~ if_else(is.na(.), "", as.character(.))),
         persistent_absence_percent = if_else(
           is.na(persistent_absence_percent),
           "c",
-          as.character(persistent_absence_percent)),
+          as.character(persistent_absence_percent)
+        ),
         persistent_absence_percent = as.character(persistent_absence_percent) # Fix to solve double combine error
       )
+    
     print(sum(is.na(existing_data$persistent_absence_percent))) # Check for NAs
-    tidy_enrol_pa <- tidy_enrol_pa |> 
-      bind_rows(existing_data)
+    
+    tidy_enrol_pa <- tidy_enrol_pa |> bind_rows(existing_data)
+    
+  } else {
+    message("No existing file to append. Proceeding without append.")
   }
+  
   write_csv(
     tidy_enrol_pa |>
-      select(-any_of(c("weekday", "attendance_description", "reference_date", "week_commencing", "persistent_absence_flag", "persistent_absence_percent_scaled"))),
+      select(-any_of(c("weekday", "attendance_description", "reference_date", "week_commencing", "persistent_absence_flag"))),
     paste0(data_folder, "attendance_persistent_absence_", source, ".csv")
   )
   enrol_pa_meta <- meta_template(tidy_enrol_pa) %>%
     # Note time frame needs filtering out from the meta until we implement something that allows it as a time_identifier or time_label
     # It's fine in the other file, but here it's only got one value (Year to date), so is rejected by the screener
-    filter(!(col_name %in% c("time_frame", "weekday", "attendance_description", "reference_date", "week_commencing", "persistent_absence_flag", "persistent_absence_percent_scaled"))) %>%
+    filter(!(col_name %in% c("time_frame", "weekday", "attendance_description", "reference_date", "week_commencing", "persistent_absence_flag"))) %>%
     mutate(
       col_type = case_when(
         grepl("persistent_absence", col_name) ~ "Indicator",
@@ -436,16 +452,21 @@ create_persistent_absence_tidy <- function(
         .default = "Filter"
       ),
       label = case_when(
-        col_name == "persistent_absence_percet" ~ "Persistent absence rate",
+        col_name == "persistent_absence_percent" ~ "Persistent absence rate",
         .default = label
+        ),
+      indicator_dp = case_when(
+        col_name == "persistent_absence_percent" ~ "2",
+        .default = indicator_dp
       )
-    ) |>
+      ) %>%
     select(-filter_default)
   write_csv(enrol_pa_meta, paste0(data_folder, "attendance_persistent_absence_", source, ".meta.csv"))
   return(tidy_enrol_pa)
 }
 
-create_school_returns_tidy <- function(source = "2025_week41", refresh = NULL) {
+
+create_school_returns_tidy <- function(source = "2026_week7", refresh = NULL) {
   att_underlying <- read_attendance(source = source, refresh = refresh)
   tidy_enrol_schools <- att_underlying |>
     select(all_of(c(primary_filters, school_indicators))) |>
@@ -494,7 +515,7 @@ create_school_returns_tidy <- function(source = "2025_week41", refresh = NULL) {
 
 # Started this next function for enrolments, but didn't seem needed in the end. Have left it in, in 
 # case it becomes useful as a starting point for enrolments later down the line
-create_enrol_tidy <- function(source = "2025_week41", refresh = NULL) {
+create_enrol_tidy <- function(source = "2026_week7", refresh = NULL) {
   att_underlying <- read_attendance(source = source, refresh = refresh)
   tidy_enrol_pa <- att_underlying |>
     select(all_of(c(primary_filters, school_indicators, enrolment_indicators))) |>
@@ -525,3 +546,32 @@ create_enrol_tidy <- function(source = "2025_week41", refresh = NULL) {
     )
   write_csv(enrol_pa_meta, paste0(data_folder, "attendance_enrol_api.meta.csv"))
 }
+
+
+# week_41_data <- read_csv("./attendance data/pupil-attendance-reasons_2025_week41.csv")
+# 
+# 
+# full_year_202425_data <- read_csv("./attendance data/pupil-attendance-reasons_2025_week29.csv")
+# 
+# 
+# YTD_202425 <- full_year_202425_data %>% filter(time_frame == "Year to date")
+# 
+# 
+# week_41_data$session_scaled <- "z" # This might cause issues as "z" isn't a number but for now it's fine
+# mock_up <- rbind(week_41_data, YTD_202425)
+# 
+# View(week_41_data)
+# View(full_year_202425_data)
+# View(YTD_202425)
+# View(mock_up)
+
+
+# Now try to generate reasons file for 2023/24?
+# Ordered descending so latest at the top
+
+
+
+
+
+
+
