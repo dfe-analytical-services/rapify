@@ -1,0 +1,7 @@
+col_name,col_type,label,indicator_grouping,indicator_unit,indicator_dp,filter_hint,filter_grouping_column,filter_default
+education_phase,Filter,Education phase,,,,,,
+school_count_submitted,Indicator,School count submitted,,,0,,,
+school_count_all,Indicator,School count all,,,0,,,
+enrolment_count_submitted,Indicator,Enrolment count submitted,,,0,,,
+enrolment_count_all,Indicator,Enrolment count all,,,0,,,
+enrolments_year_to_date,Indicator,Enrolments year to date,,,,,,
