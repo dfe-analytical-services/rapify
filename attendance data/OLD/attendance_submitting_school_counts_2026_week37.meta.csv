@@ -1,0 +1,6 @@
+col_name,col_type,label,indicator_grouping,indicator_unit,indicator_dp,filter_hint,filter_grouping_column
+time_frame,Filter,Time frame,,,,,
+reference_date,Indicator,Reference date,,,,,
+education_phase,Filter,Education phase,,,,,
+school_submitted_count,Indicator,Number of schools submitting,,,0,,
+school_all_count,Indicator,Total number of schools,,,0,,
