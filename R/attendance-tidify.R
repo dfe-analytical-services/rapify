@@ -225,7 +225,7 @@ initial_clean <- function(attendance_data) {
   latest_week_beginning <- attendance_cleaned %>%
     filter(time_frame == "Week") %>%
     summarise(
-      latest_week_beginning = min(week_commencing, na.rm = TRUE)
+      latest_week_beginning = max(week_commencing, na.rm = TRUE)
     ) %>%
     pull(latest_week_beginning)
 
