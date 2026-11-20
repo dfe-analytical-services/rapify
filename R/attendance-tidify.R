@@ -289,7 +289,7 @@ read_attendance <- function(source, refresh = NULL) {
   att_wide
 }
 
-create_reasons_tidy <- function(source = "2026_week43", refresh = FALSE) {
+create_reasons_tidy <- function(source = "2026_week45", refresh = FALSE) {
   att_underlying <- read_attendance(source = source, refresh = refresh)
   reason_filters <- data.frame(colname = names(att_underlying)) %>%
     filter(grepl("reason", colname)) %>%
@@ -482,7 +482,7 @@ create_reasons_tidy <- function(source = "2026_week43", refresh = FALSE) {
 # The appending requires that the previous release of data is available in the same directory
 # as you're writing the latest data to.
 # create_persistent_absence_tidy <- function(
-#   source = "2026_week43",
+#   source = "2026_week45",
 #   append_to = NULL,
 #   refresh = NULL
 # ) {
@@ -602,7 +602,7 @@ create_reasons_tidy <- function(source = "2026_week43", refresh = FALSE) {
 #   return(tidy_enrol_pa)
 # }
 
-create_school_returns_tidy <- function(source = "2026_week43", refresh = NULL) {
+create_school_returns_tidy <- function(source = "2026_week45", refresh = NULL) {
   att_underlying <- read_attendance(source = source, refresh = refresh)
   tidy_enrol_schools <- att_underlying |>
     select(all_of(c(primary_filters, school_indicators))) |>
@@ -668,7 +668,7 @@ create_school_returns_tidy <- function(source = "2026_week43", refresh = NULL) {
 
 # Started this next function for enrolments, but didn't seem needed in the end. Have left it in, in
 # case it becomes useful as a starting point for enrolments later down the line
-create_enrol_tidy <- function(source = "2026_week43", refresh = NULL) {
+create_enrol_tidy <- function(source = "2026_week45", refresh = NULL) {
   att_underlying <- read_attendance(source = source, refresh = refresh)
   tidy_enrol_pa <- att_underlying |>
     select(all_of(c(
@@ -738,7 +738,7 @@ create_enrol_tidy <- function(source = "2026_week43", refresh = NULL) {
 # Now try to generate reasons file for 2023/24?
 # Ordered descending so latest at the top
 
-# create_reasons_tidy()
-# # create_persistent_absence_tidy() # DONT NEED THIS UNTIL SPRING TERM
-# create_school_returns_tidy()
-# create_enrol_tidy()
+create_reasons_tidy()
+# create_persistent_absence_tidy() # DONT NEED THIS UNTIL SPRING TERM
+create_school_returns_tidy()
+create_enrol_tidy()
